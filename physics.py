@@ -3,7 +3,7 @@ import random
 import turtle
 
 gameover = False
-turtle.setup(800, 400)
+turtle.setup(800, 600)
 window = turtle.Screen()
 
 def DrawMap():
@@ -13,17 +13,17 @@ def DrawMap():
 
     drawingTurtle.penup()
 
-    for i in range(-100, 200, 100):
+    for i in range(-200, 300, 100):
         drawingTurtle.penup()
-        drawingTurtle.setposition(-400, i)
+        drawingTurtle.setposition(-600, i)
         drawingTurtle.pendown()
-        drawingTurtle.setposition(400, i)
+        drawingTurtle.setposition(600, i)
 
     for i in range(-300, 400, 100):
         drawingTurtle.penup()
-        drawingTurtle.setposition(i, 200)
+        drawingTurtle.setposition(i, 300)
         drawingTurtle.pendown()
-        drawingTurtle.setposition(i, -200)
+        drawingTurtle.setposition(i, -300)
 
 
 # main
@@ -87,7 +87,7 @@ while not gameover:
             break
 
         # 안닿았을 경우
-        if x < -400 or x > 400 or y < -200 or y > 200:
+        if x < -400 or x > 400 or y < -300 or y > 300:
             bison.hideturtle()
             object.hideturtle()
             print("try again")
