@@ -9,19 +9,77 @@ class GameState:
         self.draw = state.draw
         self.collusion = state.collusion
 
+class MyGameState:
+    def __init__(self, name):
+        self.name = name
+
     def enter(self):
-        pass
+        print("State [%s] Entered" % self.name)
+
     def exit(self):
-        pass
+        print("State [%s] Exited" % self.name)
+
     def pause(self):
-        pass
+        print("State [%s] Paused" % self.name)
+
     def resume(self):
-        pass
+        print("State [%s] Resumed" % self.name)
+
     def handle_events(self):
-        pass
+        print("State [%s] handle_events" % self.name)
+
     def update(self):
-        pass
+        print("State [%s] update" % self.name)
+
     def draw(self):
-        pass
+        print("State [%s] draw" % self.name)
+
     def collusion(self):
-        pass
+        print("State [%s] draw" % self.name)
+
+running = None
+stack = None
+
+def change_state(state):
+    global stack
+    if(len(stack) > 0):
+        stack[-1].pause()
+    stack.append(state)
+    state.enter()
+
+def push_state(state):
+    global stack
+    if (len(stack) > 0):
+        stack[-1].exit()
+        stack.pop()
+    if (len(stack) > 0):
+        stack[-1].resume()
+
+def quit():
+    global running
+    running = False
+
+
+def run(start_state):
+    global running, stack
+    running = True
+    stack = [start_state]
+    start_state.enter()
+    while (running):
+        stack[-1].handle_events()
+        stack[-1].update()
+        stack[-1].draw()
+    # repeatedly delete the top of the stack
+    while (len(stack) > 0):
+        stack[-1].exit()
+        stack.pop()
+
+
+def test_game_framework():
+    start_state = MyGameState('StartState')
+    run(start_state)
+
+
+
+if __name__ == '__main__':
+    test_game_framework()
