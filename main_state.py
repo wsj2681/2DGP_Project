@@ -9,23 +9,31 @@ hero = None
 grass = None
 font = None
 
+
 class Hero:
     def __init__(self):
         pass
+
     def update(self):
         pass
+
     def draw(self):
         pass
+
     def collusion(self):
         pass
+
 
 class Grass:
     def __init__(self):
         pass
+
     def update(self):
         pass
+
     def collusion(self):
         pass
+
     def draw(self):
         pass
 
@@ -38,14 +46,18 @@ class Item:
 def enter():
     pass
 
+
 def exit():
     pass
+
 
 def pause():
     pass
 
+
 def resume():
     pass
+
 
 def handle_event():
     events = get_events()
@@ -55,11 +67,14 @@ def handle_event():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.change_state(title_state)
 
+
 def update():
     pass
 
+
 def draw():
     pass
+
 
 def collusion():
     pass
