@@ -11,12 +11,13 @@ logo_time = 0.0
 def enter():
     global image
     image = load_image('kpu_credit.png')
+    print("load start image")
 
 
 def exit():
     global image
     del(image)
-
+    print("delete start image")
 
 def update():
     global logo_time
@@ -37,6 +38,10 @@ def draw():
     update_canvas()
 
 
-def handle_event(): pass
+def handle_events():
+    events = get_events()
+    pass
+
+
 def pause(): pass
 def resume(): pass
