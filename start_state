@@ -1,0 +1,30 @@
+import game_framework
+from pico2d import *
+import title_state
+
+
+name = "StartState"
+image = None
+logo_time = 0.0
+
+def enter():
+    global image
+    image = load_image('kpu_credit.png')
+
+def exit():
+    global image
+    del(image)
+
+def update():
+    pass
+
+def draw():
+    pass
+
+def handle_event():
+    pass
+
+def pause():
+    pass
+def resume():
+    pass
