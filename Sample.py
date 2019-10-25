@@ -3,6 +3,7 @@ import time
 
 open_canvas(800, 600)
 bird = load_image('bird.png')
+bird45 = load_image('45.png')
 grass = load_image('grass.png')
 x = 400
 y = 600
@@ -12,6 +13,7 @@ start = time.time()
 delay(1)
 end = time.time()
 etime = end - start
+
 
 def imagePoint(w,h):
     global x, y
@@ -23,9 +25,7 @@ def imagePoint(w,h):
     y1 = y-newH
     y2 = y+newH
 
-    return x1,x2,y1,y2
-
-print(type(load_image('bird.png')))
+    return x1, x2, y1, y2
 
 def isCrash(image1 = tuple, image2 = tuple):
     image1[0]
@@ -46,7 +46,7 @@ def free():
 while True:
     clear_canvas()
     grass.draw(400, 30)
-    
+
     bird.draw(x, y, 100, 100)
 
     update_canvas()
