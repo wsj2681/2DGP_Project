@@ -50,6 +50,7 @@ class Grass:
     def draw(self):
         self.image.draw(self.x, self.y)
 
+
 class Item:
     def __init__(self):
         pass
