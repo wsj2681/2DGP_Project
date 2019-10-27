@@ -19,6 +19,8 @@ class Hero:
     def __init__(self):
         self.image = load_image('45.png')
         self.x, self.y = 100, 600
+        self.x1, self.x2 = self.x, 200
+        self.y1, self.y2 = self.y, 100
 
     def update(self):
         self.y -= 1
@@ -26,6 +28,18 @@ class Hero:
             self. y = 600
             # game_framework.push_state(result_state)
             # print("go result state")
+
+    def smash(self):
+        p1 = (self.x, self.y)
+        p2 = (200, 100)
+        self.x1, self.y1 = p1[0], p1[1]
+        self.x2, self.y2 = p2[0], p2[1]
+
+        a = (self.y2-self.y1)/(self.x2-self.x1)
+        b = self.y1 - self.x1 * a
+
+        for x in range(self.x1, self.x2 + 1, 10):
+            self.y = a * self.x + b
 
     def draw(self):
         self.image.draw(self.x, self.y)
@@ -78,6 +92,8 @@ def handle_events():
         if event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.push_state(pause_state)
             print("go pause state")
+        if event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
+            hero.smash()
 
 
 def update():
