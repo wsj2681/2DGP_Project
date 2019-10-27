@@ -11,16 +11,17 @@ grass = None
 item = None
 velocity = None
 gravity = None
-
+distance = None
 font = None
+delta_time = None
 
 
 class Hero:
     def __init__(self):
         self.image = load_image('45.png')
         self.x, self.y = 100, 600
-        self.x1, self.x2 = self.x, 200
-        self.y1, self.y2 = self.y, 100
+        self.vel = None
+        self.gravity = None
 
     def update(self):
         self.y -= 1
@@ -30,16 +31,7 @@ class Hero:
             # print("go result state")
 
     def smash(self):
-        p1 = (self.x, self.y)
-        p2 = (200, 100)
-        self.x1, self.y1 = p1[0], p1[1]
-        self.x2, self.y2 = p2[0], p2[1]
-
-        a = (self.y2-self.y1)/(self.x2-self.x1)
-        b = self.y1 - self.x1 * a
-
-        for x in range(self.x1, self.x2 + 1, 10):
-            self.y = a * self.x + b
+        pass
 
     def draw(self):
         self.image.draw(self.x, self.y)
@@ -71,10 +63,12 @@ class Item:
 
 
 def enter():
-    global hero, grass, item
+    global hero, grass, item, delta_time
     hero = Hero()
     grass = Grass()
     item = Item()
+    current_time = time()
+    delta_time = current_time - time.time()
 
 
 def exit():
@@ -99,6 +93,7 @@ def handle_events():
 def update():
     hero.update()
     grass.update()
+
 
 def draw():
     clear_canvas()
