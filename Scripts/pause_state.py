@@ -8,7 +8,7 @@ flag = 1
 
 def enter():
     global image
-    image = load_image('pause.png')
+    image = load_image('Images/pause.png')
 
 
 def exit():
@@ -21,8 +21,9 @@ def update():
 
 
 def draw():
-    pass
-
+    clear_canvas()
+    image.draw(400, 300, 900, 900)
+    update_canvas()
 
 def handle_events():
     events = get_events()

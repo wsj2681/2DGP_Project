@@ -1,5 +1,7 @@
 from pico2d import *
 
+# 땅 좌표 y = 20
+
 
 class Grass:
     def __init__(self):
