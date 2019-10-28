@@ -37,15 +37,13 @@ def handle_events():
         if event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.push_state(pause_state)
             print("go pause state")
-        if event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
-            hero.smash()
         if event.type == SDL_MOUSEMOTION:
             x, y = event.x, 600 - 1 - event.y
             print(x, y)
         if event.type == SDL_KEYDOWN and event.key == SDLK_LSHIFT:
-            hero.smash(1)
+            pass
         elif event.type == SDL_KEYDOWN and event.key == SDLK_LSHIFT:
-            hero.smash(0)
+            pass
 
 
 def update():
