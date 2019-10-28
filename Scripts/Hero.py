@@ -16,13 +16,16 @@ class Hero:
             # game_framework.push_state(result_state)
             # print("go result state")
 
-    def smash(self):
-        p1 = (self.x, self.y)
-        p2 = (200, 25)
-        for i in range(0, 100 + 1, 2):
-            t = i/100
-            self.x = (1-t)*p1[0]+t*p2[0]
-            self.y = (1-t)*p1[1]+t*p2[1]
+    def smash(self, state):
+        if state is 1:
+            p1 = (self.x, self.y)
+            p2 = (200, 25)
+            for i in range(0, 100 + 1, 2):
+                t = i/100
+                self.x = (1-t)*p1[0]+t*p2[0]
+                self.y = (1-t)*p1[1]+t*p2[1]
+        else:
+            self.update()
 
     def draw(self):
         self.image.draw(self.x, self.y)

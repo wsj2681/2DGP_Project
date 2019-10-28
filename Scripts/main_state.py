@@ -43,7 +43,9 @@ def handle_events():
             x, y = event.x, 600 - 1 - event.y
             print(x, y)
         if event.type == SDL_KEYDOWN and event.key == SDLK_LSHIFT:
-            hero.smash()
+            hero.smash(1)
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_LSHIFT:
+            hero.smash(0)
 
 
 def update():
