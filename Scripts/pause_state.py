@@ -8,7 +8,7 @@ flag = 1
 
 def enter():
     global image
-    image = load_image('Images/pause.png')
+    image = load_image('Images/pause_sel.png')
 
 
 def exit():
@@ -31,6 +31,10 @@ def handle_events():
         if event.type == SDL_KEYDOWN and event.key == SDLK_r:
             game_framework.pop_state()
             print("game resume")
+        elif event.type == SDL_MOUSEMOTION:
+            x, y = event.x, 600 - 1 - event.y
+            if (x > 200, x < 600) and (y > 180, y < 300) and event.type == SDL_MOUSEBUTTONDOWN:
+                game_framework.change_state(title_state)
         if event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.change_state(title_state)
             print("game restart")
