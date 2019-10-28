@@ -3,7 +3,7 @@ from pico2d import *
 
 class Hero:
     def __init__(self):
-        self.image = load_image('45.png')
+        self.image = load_image('Images/45.png')
         self.x, self.y = 100, 600
         self.vel = None
         self.gravity = None

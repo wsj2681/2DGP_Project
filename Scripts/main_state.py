@@ -1,11 +1,7 @@
-import game_framework
+from Scripts import game_framework
 from pico2d import *
-import pause_state
-import result_state
-import time
-import Grass
-import Hero
-import Item
+from Scripts import pause_state, result_state
+from Scripts import Grass, Item, Hero
 
 name = "MainState"
 
