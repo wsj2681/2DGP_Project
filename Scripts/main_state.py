@@ -1,13 +1,14 @@
 from Scripts import game_framework
 from pico2d import *
 from Scripts import pause_state, result_state
-from Scripts import Grass, Item, Hero
+from Scripts import Grass, Item, Hero, Monster
 
 name = "MainState"
 
 hero = None
 grass = None
 item = None
+monster = None
 velocity = None
 gravity = None
 distance = None
@@ -16,11 +17,11 @@ delta_time = None
 
 
 def enter():
-    global hero, grass, item, delta_time
+    global hero, grass, item, monster, delta_time
     hero = Hero.Hero()
     grass = Grass.Grass()
     item = Item.Item()
-
+    monster = Monster.Monster()
 
 def exit():
     global hero, grass, item
@@ -48,12 +49,14 @@ def handle_events():
 def update():
     hero.update()
     grass.update()
+    monster.update()
 
 
 def draw():
     clear_canvas()
     grass.draw()
     hero.draw()
+    monster.draw()
     update_canvas()
 
 

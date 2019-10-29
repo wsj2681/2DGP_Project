@@ -26,7 +26,6 @@ class IdleState:
         hero.timer -= 1
         hero.y -= 1
         hero.x += 0.1739
-        print(hero.y, hero.x)
         if hero.y - 50 < 25 and hero.x > 200:
             hero.y = 600
             hero.x = 100
@@ -51,11 +50,9 @@ class SmashState:
         hero.timer -= 1
         hero.y -= 5
         hero.x += 0.1739
-        print(hero.y, hero.x)
         if hero.y - 50 < 25 and hero.x > 200:
             hero.y = 600
             hero.x = 100
-
 
     @staticmethod
     def draw(hero):
