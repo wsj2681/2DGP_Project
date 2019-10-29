@@ -1,11 +1,11 @@
 from pico2d import *
 
 # Hero Event
-SPACE_DOWN, SPASE_UP = range(2)
+SPACE_DOWN, SPACE_UP = range(2)
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_SPACE): SPACE_DOWN,
-    (SDL_KEYUP, SDLK_SPACE): SPASE_UP
+    (SDL_KEYUP, SDLK_SPACE): SPACE_UP
 }
 
 
@@ -13,7 +13,8 @@ key_event_table = {
 class IdleState:
     @staticmethod
     def enter(hero, event):
-        pass
+        hero.frame = 0
+        hero.x, hero.y = 100, 600
 
     @staticmethod
     def exit(hero, event):
@@ -21,17 +22,24 @@ class IdleState:
 
     @staticmethod
     def do(hero):
-        pass
+        hero.frame = (hero.frame + 1) % 1
+        hero.timer -= 1
+        hero.y -= 1
+        hero.x += 0.1739
+        print(hero.y, hero.x)
+        if hero.y - 50 < 25 and hero.x > 200:
+            hero.y = 600
+            hero.x = 100
 
     @staticmethod
     def draw(hero):
-        pass
+        hero.image.draw(hero.x, hero.y)
 
 
 class SmashState:
     @staticmethod
     def enter(hero, event):
-        pass
+        hero.timer = 100
 
     @staticmethod
     def exit(hero, event):
@@ -39,16 +47,24 @@ class SmashState:
 
     @staticmethod
     def do(hero):
-        pass
+        hero.frame = (hero.frame + 1) % 1
+        hero.timer -= 1
+        hero.y -= 5
+        hero.x += 0.1739
+        print(hero.y, hero.x)
+        if hero.y - 50 < 25 and hero.x > 200:
+            hero.y = 600
+            hero.x = 100
+
 
     @staticmethod
     def draw(hero):
-        pass
+        hero.image.draw(hero.x, hero.y)
 
 
 next_state_table = {
-    IdleState: {},
-    SmashState: {}
+    IdleState: {SPACE_DOWN: SmashState, SPACE_UP: IdleState},
+    SmashState: {SPACE_DOWN: SmashState, SPACE_UP: IdleState}
 }
 
 
@@ -56,8 +72,9 @@ class Hero:
     def __init__(self):
         # image Size 100, 100
         self.image = load_image('Images/45.png')
+        self.x, self.y = 100, 600
         self.dir = 1
-        self.velocity = 0
+        self.velocity = 1
         self.frame = 0
         self.timer = 0
         self.event_que = []
@@ -83,7 +100,7 @@ class Hero:
             self.cur_state.enter(self.event)
 
     def draw(self):
-        self.cur_state.draw(self.x, self.y)
+        self.cur_state.draw(self)
 
     def handle_event(self, event):
         if (event.type, event.key) in key_event_table:

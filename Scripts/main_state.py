@@ -39,7 +39,6 @@ def handle_events():
             print("go pause state")
         if event.type == SDL_MOUSEMOTION:
             x, y = event.x, 600 - 1 - event.y
-            print(x, y)
         if event.type == SDL_KEYDOWN and event.key == SDLK_LSHIFT:
             pass
         elif event.type == SDL_KEYDOWN and event.key == SDLK_LSHIFT:
