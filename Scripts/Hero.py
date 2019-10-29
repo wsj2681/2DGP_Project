@@ -11,11 +11,39 @@ key_event_table = {
 
 # Hero States
 class IdleState:
-    pass
+    @staticmethod
+    def enter(hero, event):
+        pass
+
+    @staticmethod
+    def exit(hero, event):
+        pass
+
+    @staticmethod
+    def do(hero):
+        pass
+
+    @staticmethod
+    def draw(hero):
+        pass
 
 
 class SmashState:
-    pass
+    @staticmethod
+    def enter(hero, event):
+        pass
+
+    @staticmethod
+    def exit(hero, event):
+        pass
+
+    @staticmethod
+    def do(hero):
+        pass
+
+    @staticmethod
+    def draw(hero):
+        pass
 
 
 next_state_table = {
@@ -42,21 +70,22 @@ class Hero:
             self.cur_state.exit(self, event)
             self.cur_state = next_state_table[self.cur_state][event]
             self.cur_state.enter(self, event)
+
     def add_event(self, event):
         self.event_que.insert(0, event)
 
     def update(self):
         self.cur_state.do(self)
         if len(self.event_que) > 0:
-            evnet = self.event_que.pop()
+            event = self.event_que.pop()
             self.cur_state.exit(self.event)
             self.cur_state = next_state_table[self.cur_state][event]
             self.cur_state.enter(self.event)
-        # game_framework.push_state(result_state)
-        # print("go result state")
 
     def draw(self):
         self.cur_state.draw(self.x, self.y)
 
     def handle_event(self, event):
-        pass
+        if (event.type, event.key) in key_event_table:
+            key_event = key_event_table[(event.type, event.key)]
+            self.add_event(key_event)
