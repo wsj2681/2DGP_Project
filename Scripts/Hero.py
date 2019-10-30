@@ -14,7 +14,8 @@ class IdleState:
     @staticmethod
     def enter(hero, event):
         hero.frame = 0
-        hero.x, hero.y = 100, 600
+        hero.x, hero.y = 100, 550
+        hero.timer = 10
 
     @staticmethod
     def exit(hero, event):
@@ -24,11 +25,14 @@ class IdleState:
     def do(hero):
         hero.frame = (hero.frame + 1) % 1
         hero.timer -= 1
-        hero.y -= 1
-        hero.x += 0.1739
-        if hero.y - 50 < 25 and hero.x > 200:
-            hero.y = 600
-            hero.x = 100
+        if hero.timer is 0:
+            hero.flag *= -1
+            hero.timer = 10
+
+        if hero.flag is -1:
+            hero.y -= 1
+        elif hero.flag is 1:
+            hero.y += 1
 
     @staticmethod
     def draw(hero):
@@ -38,6 +42,10 @@ class IdleState:
 class SmashState:
     @staticmethod
     def enter(hero, event):
+        if event == SPACE_DOWN:
+            hero.velocity += 1
+        elif event == SPACE_UP:
+            hero.velocity -= 1
         hero.timer = 100
 
     @staticmethod
@@ -48,7 +56,7 @@ class SmashState:
     def do(hero):
         hero.frame = (hero.frame + 1) % 1
         hero.timer -= 1
-        hero.y -= 5
+        hero.y -= hero.velocity
         hero.x += 0.1739
         if hero.y - 50 < 25 and hero.x > 200:
             hero.y = 600
@@ -71,9 +79,10 @@ class Hero:
         self.image = load_image('Images/45.png')
         self.x, self.y = 100, 600
         self.dir = 1
-        self.velocity = 1
+        self.velocity = 0
         self.frame = 0
         self.timer = 0
+        self.flag = 1
         self.event_que = []
         self.cur_state = IdleState
         self.cur_state.enter(self, None)

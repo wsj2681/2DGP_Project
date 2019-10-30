@@ -8,20 +8,19 @@ name = "MainState"
 hero = None
 grass = None
 item = None
-monster = None
 velocity = None
 gravity = None
 distance = None
 font = None
 delta_time = None
-
+monsters =[]
 
 def enter():
-    global hero, grass, item, monster, delta_time
+    global hero, grass, item, monsters, delta_time
     hero = Hero.Hero()
     grass = Grass.Grass()
     item = Item.Item()
-    monster = Monster.Monster()
+    monsters = [Monster.Monster() for i in range(4)]
 
 def exit():
     global hero, grass, item
@@ -49,14 +48,16 @@ def handle_events():
 def update():
     hero.update()
     grass.update()
-    monster.update()
+    for monster in monsters:
+        monster.update()
 
 
 def draw():
     clear_canvas()
     grass.draw()
     hero.draw()
-    monster.draw()
+    for monster in monsters:
+        monster.draw()
     update_canvas()
 
 
