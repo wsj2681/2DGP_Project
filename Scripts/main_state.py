@@ -1,31 +1,34 @@
 from Scripts import game_framework
 from pico2d import *
 from Scripts import pause_state, result_state
-from Scripts import Grass, Item, Hero, Monster
+from Scripts import Map, Item, Hero, Monster, Obstacle
 
 name = "MainState"
 
 hero = None
-grass = None
+background = None
 item = None
 velocity = None
 gravity = None
 distance = None
 font = None
 delta_time = None
-monsters =[]
+monsters = []
+obstacles = []
+
 
 def enter():
-    global hero, grass, item, monsters, delta_time
+    global hero, background, item, monsters, delta_time
     hero = Hero.Hero()
-    grass = Grass.Grass()
+    background = Map.Map()
     item = Item.Item()
     monsters = [Monster.Monster() for i in range(4)]
 
+
 def exit():
-    global hero, grass, item
+    global hero, background, item
     del(hero)
-    del(grass)
+    del(background)
     del(item)
 
 
@@ -49,14 +52,14 @@ def handle_events():
 
 def update():
     hero.update()
-    grass.update()
+    background.update()
     for monster in monsters:
         monster.update()
 
 
 def draw():
     clear_canvas()
-    grass.draw()
+    background.draw()
     hero.draw()
     for monster in monsters:
         monster.draw()

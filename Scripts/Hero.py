@@ -85,6 +85,30 @@ class SmashState:
 
     @staticmethod
     def draw(hero):
+        p1 = (hero.x, hero.y)
+        p2 = (200, 75)
+        for i in range(0, 100 + 1, 1):
+            t = i / 100
+            hero.x = (1 - t) * p1[0] + t * p2[0]
+            hero.y = (1 - t) * p1[1] + t * p2[1]
+            hero.image.draw(hero.x, hero.y)
+
+
+class Comeback:
+    @staticmethod
+    def enter(hero, event):
+        pass
+    
+    @staticmethod
+    def exit(hero, event):
+        pass
+
+    @staticmethod
+    def do(hero):
+        pass
+
+    @staticmethod
+    def draw(hero):
         hero.image.draw(hero.x, hero.y)
 
 

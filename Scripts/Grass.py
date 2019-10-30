@@ -3,7 +3,7 @@ from pico2d import *
 # 땅 좌표 y = 20
 
 
-class Grass:
+class Map:
     def __init__(self):
         self.image = load_image('Images/background.png')
         self.x, self.y = 0, 300
