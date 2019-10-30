@@ -1,5 +1,25 @@
 from pico2d import *
 
+
+# init smash line
+smash_line = []
+smash_line_cnt = 0
+
+
+def line():
+    global smash_line
+    p1 = (100, 600)
+    p2 = (200, 25)
+
+    x1, y1 = p1[0], p1[1]
+    x2, y2 = p2[0], p2[1]
+    a = (y2-y1) / (x2 - x1)
+    b = y1 - x1 * a
+    for x in range(x1, x2+1, 1):
+        y = a * x + b
+        smash_line.append((x, y))
+
+
 # Hero Event
 SPACE_DOWN, SPACE_UP = range(2)
 
@@ -13,9 +33,9 @@ key_event_table = {
 class IdleState:
     @staticmethod
     def enter(hero, event):
-        hero.frame = 0
         hero.x, hero.y = 100, 550
         hero.timer = 10
+        hero.frame = 0
 
     @staticmethod
     def exit(hero, event):
@@ -25,6 +45,7 @@ class IdleState:
     def do(hero):
         hero.frame = (hero.frame + 1) % 1
         hero.timer -= 1
+
         if hero.timer is 0:
             hero.flag *= -1
             hero.timer = 10
@@ -42,10 +63,7 @@ class IdleState:
 class SmashState:
     @staticmethod
     def enter(hero, event):
-        if event == SPACE_DOWN:
-            hero.velocity += 1
-        elif event == SPACE_UP:
-            hero.velocity -= 1
+        hero.frame = 0
         hero.timer = 100
 
     @staticmethod
@@ -56,14 +74,15 @@ class SmashState:
     def do(hero):
         hero.frame = (hero.frame + 1) % 1
         hero.timer -= 1
-        hero.y -= hero.velocity
+        hero.y -= 1
         hero.x += 0.1739
-        if hero.y - 50 < 25 and hero.x > 200:
-            hero.y = 600
-            hero.x = 100
 
     @staticmethod
     def draw(hero):
+        global smash_line, smash_line_cnt
+        smash_line_cnt += 1
+        hero.x = smash_line[smash_line_cnt][0]
+        hero.y = smash_line[smash_line_cnt][1]
         hero.image.draw(hero.x, hero.y)
 
 
@@ -101,14 +120,14 @@ class Hero:
         self.cur_state.do(self)
         if len(self.event_que) > 0:
             event = self.event_que.pop()
-            self.cur_state.exit(self.event)
+            self.cur_state.exit(self, event)
             self.cur_state = next_state_table[self.cur_state][event]
-            self.cur_state.enter(self.event)
+            self.cur_state.enter(self, event)
 
     def draw(self):
         self.cur_state.draw(self)
 
-    def handle_event(self, event):
+    def handle_events(self, event):
         if (event.type, event.key) in key_event_table:
             key_event = key_event_table[(event.type, event.key)]
             self.add_event(key_event)
