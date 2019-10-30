@@ -72,15 +72,16 @@ class SmashState:
 
     @staticmethod
     def do(hero):
-        p1 =(hero.x, hero.y)
-        p2 =(200, 25)
+        p1 = (hero.x, hero.y)
+        p2 = (200, 75)
         hero.frame = (hero.frame + 1) % 1
         hero.timer -= 1
         t = 100 - hero.timer
         hero.x = (1-t)*p1[0]+t*p2[0]
         hero.y = (1-t)*p1[1]+t*p2[1]
         if t is 100:
-            t = 0
+            hero.add_event(SPACE_UP)
+            hero.timer = 100
 
     @staticmethod
     def draw(hero):
@@ -91,6 +92,7 @@ next_state_table = {
     IdleState: {SPACE_DOWN: SmashState, SPACE_UP: IdleState},
     SmashState: {SPACE_DOWN: SmashState, SPACE_UP: IdleState}
 }
+
 
 class Hero:
     def __init__(self):
