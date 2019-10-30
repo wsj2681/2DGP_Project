@@ -43,7 +43,8 @@ def handle_events():
             pass
         elif event.type == SDL_KEYDOWN and event.key == SDLK_LSHIFT:
             pass
-
+        else:
+            hero.handle_events(event);
 
 def update():
     hero.update()

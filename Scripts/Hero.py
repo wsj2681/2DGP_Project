@@ -24,8 +24,8 @@ def line():
 SPACE_DOWN, SPACE_UP = range(2)
 
 key_event_table = {
-    (SDL_KEYDOWN, SDLK_SPACE): SPACE_DOWN,
-    (SDL_KEYUP, SDLK_SPACE): SPACE_UP
+    (SDL_KEYDOWN, SDLK_DOWN): SPACE_DOWN,
+    (SDL_KEYUP, SDLK_DOWN): SPACE_UP
 }
 
 
@@ -72,17 +72,18 @@ class SmashState:
 
     @staticmethod
     def do(hero):
+        p1 =(hero.x, hero.y)
+        p2 =(200, 25)
         hero.frame = (hero.frame + 1) % 1
         hero.timer -= 1
-        hero.y -= 1
-        hero.x += 0.1739
+        t = 100 - hero.timer
+        hero.x = (1-t)*p1[0]+t*p2[0]
+        hero.y = (1-t)*p1[1]+t*p2[1]
+        if t is 100:
+            t = 0
 
     @staticmethod
     def draw(hero):
-        global smash_line, smash_line_cnt
-        smash_line_cnt += 1
-        hero.x = smash_line[smash_line_cnt][0]
-        hero.y = smash_line[smash_line_cnt][1]
         hero.image.draw(hero.x, hero.y)
 
 
@@ -90,7 +91,6 @@ next_state_table = {
     IdleState: {SPACE_DOWN: SmashState, SPACE_UP: IdleState},
     SmashState: {SPACE_DOWN: SmashState, SPACE_UP: IdleState}
 }
-
 
 class Hero:
     def __init__(self):
