@@ -18,18 +18,21 @@ obstacles = []
 
 
 def enter():
-    global hero, background, item, monsters, delta_time
+    global hero, background, item, monsters, obstacles, delta_time
     hero = Hero.Hero()
     background = Map.Map()
     item = Item.Item()
     monsters = [Monster.Monster() for i in range(4)]
+    obstacles = [Obstacle.Obstacle() for i in range(4)]
 
 
 def exit():
-    global hero, background, item
+    global hero, background, item, monsters, obstacles
     del(hero)
     del(background)
     del(item)
+    del(monsters)
+    del(obstacles)
 
 
 def handle_events():
@@ -55,6 +58,8 @@ def update():
     background.update()
     for monster in monsters:
         monster.update()
+    for obstacle in obstacles:
+        obstacle.update()
 
 
 def draw():
@@ -63,6 +68,8 @@ def draw():
     hero.draw()
     for monster in monsters:
         monster.draw()
+    for obstacle in obstacles:
+        obstacle.draw()
     update_canvas()
 
 
