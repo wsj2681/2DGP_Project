@@ -1,4 +1,3 @@
-from Scripts import game_framework
 from pico2d import *
 import random
 
@@ -9,8 +8,9 @@ class Monster:
     def __init__(self):
         self.x, self. y = 750, 75
         self.random_x = random.randint(1, 10)
-        self. frame = 0
-        self.image = load_image('Images/monster_idle.png')
+        self.frame = 0
+        if Monster.image is None:
+            Monster.image = load_image('Images/monster_idle.png')
 
     def update(self):
         self.frame = (self.frame + 1) % 4

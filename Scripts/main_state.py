@@ -1,38 +1,38 @@
 from Scripts import game_framework
 from pico2d import *
 from Scripts import pause_state, result_state
-from Scripts import Map, Item, Hero, Monster, Obstacle
+from Scripts import Map, Item, Hero, Monster, Obstacle, UI_Hp
 
 name = "MainState"
 
 hero = None
-background = None
 item = None
-velocity = None
-gravity = None
-distance = None
-font = None
-delta_time = None
+ui_hp = None
+background = None
 monsters = []
 obstacles = []
 
 
 def enter():
-    global hero, background, item, monsters, obstacles, delta_time
-    hero = Hero.Hero()
-    background = Map.Map()
-    item = Item.Item()
-    monsters = [Monster.Monster() for i in range(4)]
+    global hero, background, item, monsters, obstacles, ui_hp
+
     obstacles = [Obstacle.Obstacle() for i in range(4)]
+    monsters = [Monster.Monster() for i in range(4)]
+    background = Map.Map()
+    hero = Hero.Hero()
+    item = Item.Item()
+    ui_hp = UI_Hp.Hp()
 
 
 def exit():
-    global hero, background, item, monsters, obstacles
+    global hero, background, item, monsters, obstacles,ui_hp
+
     del(hero)
     del(background)
     del(item)
     del(monsters)
     del(obstacles)
+    del(ui_hp)
 
 
 def handle_events():
@@ -43,8 +43,6 @@ def handle_events():
         if event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.push_state(pause_state)
             print("go pause state")
-        if event.type == SDL_MOUSEMOTION:
-            x, y = event.x, 600 - 1 - event.y
         if event.type == SDL_KEYDOWN and event.key == SDLK_LSHIFT:
             pass
         elif event.type == SDL_KEYDOWN and event.key == SDLK_LSHIFT:
@@ -65,16 +63,13 @@ def update():
 def draw():
     clear_canvas()
     background.draw()
-    hero.draw()
     for monster in monsters:
         monster.draw()
     for obstacle in obstacles:
         obstacle.draw()
+    hero.draw()
+    ui_hp.draw()
     update_canvas()
-
-
-def collusion():
-    pass
 
 
 def pause(): pass
