@@ -1,6 +1,5 @@
 from pico2d import *
 
-
 # init smash line
 smash_line = []
 
@@ -12,7 +11,7 @@ def hero_line(hero):
 
     x1, y1 = p1[0], p1[1]
     x2, y2 = p2[0], p2[1]
-    a = (y2-y1) / (x2 - x1)
+    a = (y2 - y1) / (x2 - x1)
     b = y1 - x1 * a
     for x in range(x1, x2, 1):
         y = a * x + b
@@ -75,10 +74,8 @@ class SmashState:
     def do(hero):
         hero.frame = (hero.frame + 1) % 1
         hero.timer -= 1
-
         if hero.timer is 0:
             hero.timer = 100
-
         hero.x = smash_line[100 - hero.timer][0]
         hero.y = smash_line[100 - hero.timer][1]
         if hero.x is 25:
@@ -86,22 +83,31 @@ class SmashState:
 
     @staticmethod
     def draw(hero):
-
         hero.image.draw(hero.x, hero.y)
 
 
 class Comeback:
     @staticmethod
     def enter(hero, event):
-        pass
-    
+        global smash_line
+        hero.frame = 0
+        hero.timer = 100
+        hero_line(hero)
+
     @staticmethod
     def exit(hero, event):
         pass
 
     @staticmethod
     def do(hero):
-        pass
+        hero.frame = (hero.frame + 1) % 1
+        hero.timer -= 1
+        if hero.timer is 0:
+            hero.timer = 100
+        hero.x = smash_line[hero.timer - 100][0]
+        hero.y = smash_line[hero.timer - 100][1]
+        if hero.x > smash_line[0][0]:
+            hero.add_event(SPACE_UP)
 
     @staticmethod
     def draw(hero):
@@ -110,7 +116,8 @@ class Comeback:
 
 next_state_table = {
     IdleState: {SPACE_DOWN: SmashState, SPACE_UP: IdleState},
-    SmashState: {SPACE_DOWN: SmashState, SPACE_UP: IdleState}
+    SmashState: {SPACE_DOWN: SmashState, SPACE_UP: Comeback},
+    Comeback: {SPACE_DOWN: IdleState, SPACE_UP: IdleState}
 }
 
 
