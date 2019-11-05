@@ -13,7 +13,7 @@ def enter():
 
 def exit():
     global image
-    del(image)
+    del image
 
 
 def update():

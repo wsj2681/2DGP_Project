@@ -27,12 +27,12 @@ def enter():
 def exit():
     global hero, background, item, monsters, obstacles,ui_hp
 
-    del(hero)
-    del(background)
-    del(item)
-    del(monsters)
-    del(obstacles)
-    del(ui_hp)
+    del hero
+    del background
+    del item
+    del monsters
+    del obstacles
+    del ui_hp
 
 
 def handle_events():
