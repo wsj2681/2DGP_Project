@@ -43,10 +43,8 @@ def handle_events():
         if event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.push_state(pause_state)
             print("go pause state")
-        if event.type == SDL_KEYDOWN and event.key == SDLK_LSHIFT:
-            pass
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_LSHIFT:
-            pass
+        if event.type == SDL_KEYDOWN and event.key == SDLK_y:
+            game_framework.push_state(result_state)
         else:
             hero.handle_events(event)
 

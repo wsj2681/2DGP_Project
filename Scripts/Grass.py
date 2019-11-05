@@ -1,6 +1,6 @@
 from pico2d import *
 
-# 땅 좌표 y = 20
+# 땅 좌표 y = 25
 
 
 class Map:

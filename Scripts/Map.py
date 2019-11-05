@@ -1,6 +1,8 @@
 from pico2d import *
 
 # 땅 좌표 y = 20
+# 추가 맵 이미지
+# 맵 속도
 
 
 class Map:

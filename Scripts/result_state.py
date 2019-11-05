@@ -7,11 +7,14 @@ image = None
 
 
 def enter():
-    pass
+    global image
+
+    image = load_image('Images/gameover.png')
 
 
 def exit():
-    pass
+    global image
+    del image
 
 
 def update():
@@ -19,7 +22,10 @@ def update():
 
 
 def draw():
-    pass
+    global image
+    clear_canvas()
+    image.draw(400, 300)
+    update_canvas()
 
 
 def handle_events():

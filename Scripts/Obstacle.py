@@ -6,7 +6,7 @@ class Obstacle:
     image = None
 
     def __init__(self):
-        self.x, self.y = 750, random.randint(400, 600)
+        self.x, self.y = 750, random.randint(400, 550)
         self.random_x = random.randint(1, 10)
         self.frame = 0
         if Obstacle.image is None:

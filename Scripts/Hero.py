@@ -3,19 +3,18 @@ from pico2d import *
 
 # init smash line
 smash_line = []
-smash_line_cnt = 0
 
 
-def line():
+def hero_line(hero):
     global smash_line
-    p1 = (100, 600)
+    p1 = (hero.x, hero.y)
     p2 = (200, 25)
 
     x1, y1 = p1[0], p1[1]
     x2, y2 = p2[0], p2[1]
     a = (y2-y1) / (x2 - x1)
     b = y1 - x1 * a
-    for x in range(x1, x2+1, 1):
+    for x in range(x1, x2, 1):
         y = a * x + b
         smash_line.append((x, y))
 
@@ -63,8 +62,10 @@ class IdleState:
 class SmashState:
     @staticmethod
     def enter(hero, event):
+        global smash_line
         hero.frame = 0
         hero.timer = 100
+        hero_line(hero)
 
     @staticmethod
     def exit(hero, event):
@@ -72,26 +73,21 @@ class SmashState:
 
     @staticmethod
     def do(hero):
-        p1 = (hero.x, hero.y)
-        p2 = (200, 75)
         hero.frame = (hero.frame + 1) % 1
         hero.timer -= 1
-        t = 100 - hero.timer
-        hero.x = (1-t)*p1[0]+t*p2[0]
-        hero.y = (1-t)*p1[1]+t*p2[1]
-        if t is 100:
-            hero.add_event(SPACE_UP)
+
+        if hero.timer is 0:
             hero.timer = 100
+
+        hero.x = smash_line[100 - hero.timer][0]
+        hero.y = smash_line[100 - hero.timer][1]
+        if hero.x is 25:
+            hero.add_event(SPACE_UP)
 
     @staticmethod
     def draw(hero):
-        p1 = (hero.x, hero.y)
-        p2 = (200, 75)
-        for i in range(0, 100 + 1, 1):
-            t = i / 100
-            hero.x = (1 - t) * p1[0] + t * p2[0]
-            hero.y = (1 - t) * p1[1] + t * p2[1]
-            hero.image.draw(hero.x, hero.y)
+
+        hero.image.draw(hero.x, hero.y)
 
 
 class Comeback:
@@ -119,6 +115,9 @@ next_state_table = {
 
 
 class Hero:
+    # 충돌체크
+    # 캐릭터 이동모션
+    # 이미지 각도
     def __init__(self):
         # image Size 100, 100
         self.image = load_image('Images/45.png')
