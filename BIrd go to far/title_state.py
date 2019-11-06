@@ -1,5 +1,7 @@
-from Scripts import game_framework, main_state
 from pico2d import *
+
+import game_framework
+import main_state
 
 name = "TitleState"
 image = None

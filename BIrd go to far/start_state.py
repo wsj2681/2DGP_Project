@@ -1,6 +1,7 @@
-from Scripts import game_framework, title_state
 from pico2d import *
 
+import game_framework
+import title_state
 
 name = "StartState"
 image = None

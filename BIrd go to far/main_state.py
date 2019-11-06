@@ -1,7 +1,15 @@
-from Scripts import game_framework
 from pico2d import *
-from Scripts import pause_state, result_state
-from Scripts import Map, Item, Hero, Monster, Obstacle, UI_Hp
+
+import game_framework
+import pause_state
+import result_state
+import Hero
+import Item
+import Map
+import Monster
+import Obstacle
+import UI_Hp
+
 
 name = "MainState"
 
