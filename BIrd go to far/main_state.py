@@ -14,7 +14,7 @@ import UI_Hp
 name = "MainState"
 
 hero = None
-trap = None
+item = None
 ui_hp = None
 background = None
 monsters = []
@@ -22,22 +22,22 @@ obstacles = []
 
 
 def enter():
-    global hero, background, trap, monsters, obstacles, ui_hp
+    global hero, background, item, monsters, obstacles, ui_hp
 
     obstacles = [Obstacle.Obstacle() for i in range(4)]
     monsters = [Monster.Monster() for i in range(4)]
     background = Map.Map()
     hero = Hero.Hero()
-    trap = Item.Trap()
+    item = Item.Item()
     ui_hp = UI_Hp.Hp()
 
 
 def exit():
-    global hero, background, trap, monsters, obstacles,ui_hp
+    global hero, background, item, monsters, obstacles,ui_hp
 
     del hero
     del background
-    del trap
+    del item
     del monsters
     del obstacles
     del ui_hp
@@ -64,7 +64,6 @@ def update():
         monster.update()
     for obstacle in obstacles:
         obstacle.update()
-    trap.update()
 
 
 def draw():
@@ -74,7 +73,6 @@ def draw():
         monster.draw()
     for obstacle in obstacles:
         obstacle.draw()
-    trap.draw()
     hero.draw()
     ui_hp.draw()
     update_canvas()
