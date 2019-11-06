@@ -28,23 +28,14 @@ class Trap:
 
 
 class Heart:
-    image = None
-
     def __init__(self):
-        self.x, self.y = 750, random.randint(400, 550)
-        self.random_x = random.randint(1, 10)
-        self.frame = 0
-        if Heart.image is None:
-            Heart.image = load_image('Images/heart.png')
+        pass
 
     def update(self):
-        self.frame = (self.frame + 1) % 1
-        self.x -= self.random_x
-        if self.x < 0:
-            self.x = 750
+        pass
 
     def draw(self):
-        self.image.draw(self.x, self.y, 50, 50)
+        pass
 
 
 class VelocityUp:
