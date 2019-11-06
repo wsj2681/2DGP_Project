@@ -6,6 +6,7 @@ smash_line = []
 
 def hero_line(hero):
     global smash_line
+    del smash_line[:]
     p1 = (hero.x, hero.y)
     p2 = (200, 25)
 
@@ -13,7 +14,7 @@ def hero_line(hero):
     x2, y2 = p2[0], p2[1]
     a = (y2 - y1) / (x2 - x1)
     b = y1 - x1 * a
-    for x in range(x1, x2, 1):
+    for x in range(x1, x2, 2):
         y = a * x + b
         smash_line.append((x, y))
 
@@ -22,8 +23,8 @@ def hero_line(hero):
 SPACE_DOWN, SPACE_UP = range(2)
 
 key_event_table = {
-    (SDL_KEYDOWN, SDLK_DOWN): SPACE_DOWN,
-    (SDL_KEYUP, SDLK_DOWN): SPACE_UP
+    (SDL_KEYDOWN, SDLK_SPACE): SPACE_DOWN,
+    (SDL_KEYUP, SDLK_SPACE): SPACE_UP
 }
 
 
@@ -45,12 +46,12 @@ class IdleState:
         hero.timer -= 1
 
         if hero.timer is 0:
-            hero.flag *= -1
+            hero.dir *= -1
             hero.timer = 10
 
-        if hero.flag is -1:
+        if hero.dir is -1:
             hero.y -= 1
-        elif hero.flag is 1:
+        elif hero.dir is 1:
             hero.y += 1
 
     @staticmethod
@@ -63,7 +64,7 @@ class SmashState:
     def enter(hero, event):
         global smash_line
         hero.frame = 0
-        hero.timer = 100
+        hero.timer = 50
         hero_line(hero)
 
     @staticmethod
@@ -75,10 +76,10 @@ class SmashState:
         hero.frame = (hero.frame + 1) % 1
         hero.timer -= 1
         if hero.timer is 0:
-            hero.timer = 100
-        hero.x = smash_line[100 - hero.timer][0]
-        hero.y = smash_line[100 - hero.timer][1]
-        if hero.x is 25:
+            hero.timer = 50
+        hero.x = smash_line[50 - hero.timer][0]
+        hero.y = smash_line[50 - hero.timer][1]
+        if hero.x < 25:
             hero.add_event(SPACE_UP)
 
     @staticmethod
@@ -91,7 +92,7 @@ class Comeback:
     def enter(hero, event):
         global smash_line
         hero.frame = 0
-        hero.timer = 100
+        hero.timer = 50
         hero_line(hero)
 
     @staticmethod
@@ -104,10 +105,10 @@ class Comeback:
         hero.timer -= 1
         if hero.timer is 0:
             hero.timer = 100
-        hero.x = smash_line[hero.timer - 100][0]
-        hero.y = smash_line[hero.timer - 100][1]
+        hero.x = smash_line[hero.timer - 50][0]
+        hero.y = smash_line[hero.timer - 50][1]
         if hero.x > smash_line[0][0]:
-            hero.add_event(SPACE_UP)
+            hero.add_event(SPACE_DOWN)
 
     @staticmethod
     def draw(hero):
@@ -117,7 +118,7 @@ class Comeback:
 next_state_table = {
     IdleState: {SPACE_DOWN: SmashState, SPACE_UP: IdleState},
     SmashState: {SPACE_DOWN: SmashState, SPACE_UP: Comeback},
-    Comeback: {SPACE_DOWN: IdleState, SPACE_UP: IdleState}
+    Comeback: {SPACE_DOWN: IdleState, SPACE_UP: Comeback}
 }
 
 
@@ -130,10 +131,9 @@ class Hero:
         self.image = load_image('Images/45.png')
         self.x, self.y = 100, 600
         self.dir = 1
-        self.velocity = 0
+        # self.velocity = 0
         self.frame = 0
         self.timer = 0
-        self.flag = 1
         self.event_que = []
         self.cur_state = IdleState
         self.cur_state.enter(self, None)
