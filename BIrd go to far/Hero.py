@@ -1,5 +1,5 @@
 from pico2d import *
-
+import game_world
 # Hero Event
 SPACE_DOWN, SPACE_UP = range(2)
 
@@ -13,8 +13,8 @@ key_event_table = {
 class IdleState:
     @staticmethod
     def enter(hero, event):
-        hero.frame = 0
-        hero.x, hero.y
+        if event == SPACE_DOWN:
+            hero.add_event(SmashState)
 
     @staticmethod
     def exit(hero, event):
@@ -26,7 +26,7 @@ class IdleState:
 
     @staticmethod
     def draw(hero):
-        pass
+        hero.image.draw(hero.x, hero.y)
 
 
 class SmashState:
@@ -44,7 +44,7 @@ class SmashState:
 
     @staticmethod
     def draw(hero):
-        pass
+        hero.image.draw(hero.x, hero.y)
 
 
 class ComebackState:
@@ -66,8 +66,8 @@ class ComebackState:
 
 
 next_state_table = {
-    IdleState: {},
-    SmashState: {},
+    IdleState: {SPACE_DOWN: SmashState, SPACE_UP: IdleState},
+    SmashState: {SPACE_DOWN: SmashState, SPACE_UP: IdleState},
     ComebackState: {}
 }
 
@@ -76,11 +76,10 @@ class Hero:
 
     def __init__(self):
         self.x, self.y = 100, 550
-        self.image = load_image('animation_sheet.png')
+        self.image = load_image('Images/45.png')
+        self.life = 3
         self.dir = 1
-        self.velocity = 0
         self.frame = 0
-        self.timer = 0
         self.event_que = []
         self.cur_state = IdleState
         self.cur_state.enter(self, None)
@@ -106,7 +105,7 @@ class Hero:
     def draw(self):
         self.cur_state.draw(self)
 
-    def handle_event(self, event):
+    def handle_events(self, event):
         if (event.type, event.key) in key_event_table:
             key_event = key_event_table[(event.type, event.key)]
             self.add_event(key_event)

@@ -9,7 +9,7 @@ import Map
 import Monster
 import Obstacle
 import UI_Hp
-
+import game_world
 
 name = "MainState"
 
@@ -30,17 +30,12 @@ def enter():
     hero = Hero.Hero()
     item = Item.Item()
     ui_hp = UI_Hp.Hp()
+    game_world.add_object(hero, 0)
+    game_world.add_object(background, 1)
 
 
 def exit():
-    global hero, background, item, monsters, obstacles,ui_hp
-
-    del hero
-    del background
-    del item
-    del monsters
-    del obstacles
-    del ui_hp
+    game_world.clear()
 
 
 def handle_events():
@@ -58,23 +53,14 @@ def handle_events():
 
 
 def update():
-    hero.update()
-    background.update()
-    for monster in monsters:
-        monster.update()
-    for obstacle in obstacles:
-        obstacle.update()
+    for game_object in game_world.all_objects():
+        game_object.update()
 
 
 def draw():
     clear_canvas()
-    background.draw()
-    for monster in monsters:
-        monster.draw()
-    for obstacle in obstacles:
-        obstacle.draw()
-    hero.draw()
-    ui_hp.draw()
+    for game_object in game_world.all_objects():
+        game_object.draw()
     update_canvas()
 
 

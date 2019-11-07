@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5b885e0-3cee-4c85-967a-e9448c6871ae" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/game_world.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Hero.py" beforeDir="false" afterPath="$PROJECT_DIR$/Hero.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/heart.png" beforeDir="false" afterPath="$PROJECT_DIR$/Images/heart.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Item.py" beforeDir="false" afterPath="$PROJECT_DIR$/Item.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reference/Sample.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reference/ball21x21.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Reference/sample2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_state.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,13 +13,22 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="1TENFMiyaibJ8kCvOyzaChWhUUc" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/main.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -103,7 +109,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
