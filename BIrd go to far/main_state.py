@@ -17,21 +17,33 @@ hero = None
 item = None
 ui_hp = None
 background = None
-monsters = []
-obstacles = []
+monster = None
+obstacle = None
 
 
 def enter():
-    global hero, background, item, monsters, obstacles, ui_hp
+    global hero, background, item, monster, obstacle, ui_hp
 
-    obstacles = [Obstacle.Obstacle() for i in range(4)]
-    monsters = [Monster.Monster() for i in range(4)]
     background = Map.Map()
+    game_world.add_object(background, 0)
     hero = Hero.Hero()
-    item = Item.Item()
+    game_world.add_object(hero, 1)
+
+    for i in range(4):
+        obstacle = Obstacle.Obstacle()
+        game_world.add_object(obstacle, 1)
+    for i in range(4):
+        monster = Monster.Monster()
+        game_world.add_object(monster, 1)
+
+    '''
+    for i in range(4):
+        item = Item.Item()
+        game_world.add_object(item, 1)
+    '''
+
     ui_hp = UI_Hp.Hp()
-    game_world.add_object(hero, 0)
-    game_world.add_object(background, 1)
+    game_world.add_object(ui_hp, 2)
 
 
 def exit():

@@ -1,5 +1,32 @@
 from pico2d import *
+import curve_movement
 import game_world
+
+smash_line = []
+
+
+def fill_smash_location(hero):
+    global smash_line
+    smash_line = []
+    points = [(hero.x, hero.y), (200, 300), (200, 50), (100, 300)]
+    for i in range(0, 100, 2):
+        t = i / 100
+        res = curve_movement.mathematics_type_b(t, points[3], points[0], points[1], points[2])
+        smash_line.append(res)
+    for i in range(0, 100, 2):
+        t = i / 100
+        res = curve_movement.mathematics_type_b(t, points[0], points[1], points[2], points[3])
+        smash_line.append(res)
+    for i in range(0, 100, 2):
+        t = i / 100
+        res = curve_movement.mathematics_type_b(t, points[1], points[2], points[3], points[0])
+        smash_line.append(res)
+    for i in range(0, 100, 2):
+        t = i / 100
+        res = curve_movement.mathematics_type_b(t, points[2], points[3], points[0], points[1])
+        smash_line.append(res)
+
+
 # Hero Event
 SPACE_DOWN, SPACE_UP = range(2)
 
@@ -13,8 +40,8 @@ key_event_table = {
 class IdleState:
     @staticmethod
     def enter(hero, event):
-        if event == SPACE_DOWN:
-            hero.add_event(SmashState)
+        hero.x, hero.y = 100, 550
+        hero.timer = 10
 
     @staticmethod
     def exit(hero, event):
@@ -22,7 +49,16 @@ class IdleState:
 
     @staticmethod
     def do(hero):
-        pass
+        hero.timer -= 1
+
+        if hero.timer == 0:
+            hero.dir *= -1
+            hero.timer = 10
+
+        if hero.dir is -1:
+            hero.y -= 1
+        elif hero.dir is 1:
+            hero.y += 1
 
     @staticmethod
     def draw(hero):
@@ -32,7 +68,10 @@ class IdleState:
 class SmashState:
     @staticmethod
     def enter(hero, event):
-        pass
+        global smash_line
+        hero.timer = 200
+        fill_smash_location(hero)
+        print(len(smash_line))
 
     @staticmethod
     def exit(hero, event):
@@ -40,7 +79,13 @@ class SmashState:
 
     @staticmethod
     def do(hero):
-        pass
+        hero.timer -= 1
+        if hero.timer == 0:
+            hero.timer = 200
+        hero.x = smash_line[200 - hero.timer][0]
+        hero.y = smash_line[200 - hero.timer][1]
+        if hero.x == smash_line[199][0]:
+            hero.add_event(SPACE_UP)
 
     @staticmethod
     def draw(hero):
@@ -66,8 +111,8 @@ class ComebackState:
 
 
 next_state_table = {
-    IdleState: {SPACE_DOWN: SmashState, SPACE_UP: IdleState},
-    SmashState: {SPACE_DOWN: SmashState, SPACE_UP: IdleState},
+    IdleState: {SPACE_DOWN: SmashState, SPACE_UP: SmashState},
+    SmashState: {SPACE_DOWN: IdleState, SPACE_UP: IdleState},
     ComebackState: {}
 }
 
@@ -80,6 +125,7 @@ class Hero:
         self.life = 3
         self.dir = 1
         self.frame = 0
+        self.timer = 0
         self.event_que = []
         self.cur_state = IdleState
         self.cur_state.enter(self, None)
