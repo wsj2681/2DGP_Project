@@ -6,9 +6,9 @@ import result_state
 import Hero
 import Item
 import Map
-import Monster
-import Obstacle
-import UI_Hp
+from Monster import Monster
+from Obstacle import Obstacle
+from UI_Hp import Hp
 import game_world
 
 name = "MainState"
@@ -17,24 +17,38 @@ hero = None
 item = None
 ui_hp = None
 background = None
-monster = None
-obstacle = None
+monsters = []
+obstacles = []
+
+
+def collide(a, b):
+    left_a, bottom_a, right_a, top_a = a.get_bb()
+    left_b, bottom_b, right_b, top_b = b.get_bb()
+
+    if left_a > right_b:
+        return False
+    if right_a < left_b:
+        return False
+    if top_a < bottom_b:
+        return False
+    if bottom_a > top_b:
+        return False
+
+    return True
 
 
 def enter():
-    global hero, background, item, monster, obstacle, ui_hp
+    global hero, background, item, monsters, obstacles, ui_hp
 
     background = Map.Map()
     game_world.add_object(background, 0)
     hero = Hero.Hero()
     game_world.add_object(hero, 1)
 
-    for i in range(4):
-        obstacle = Obstacle.Obstacle()
-        game_world.add_object(obstacle, 1)
-    for i in range(4):
-        monster = Monster.Monster()
-        game_world.add_object(monster, 1)
+    monsters = [Monster() for i in range(4)]
+    game_world.add_objects(monsters, 1)
+    obstacles = [Obstacle() for i in range(4)]
+    game_world.add_objects(obstacles, 1)
 
     '''
     for i in range(4):
@@ -42,7 +56,7 @@ def enter():
         game_world.add_object(item, 1)
     '''
 
-    ui_hp = UI_Hp.Hp()
+    ui_hp = Hp()
     game_world.add_object(ui_hp, 2)
 
 
@@ -67,6 +81,17 @@ def handle_events():
 def update():
     for game_object in game_world.all_objects():
         game_object.update()
+    for monster in monsters:
+        if collide(hero, monster):
+            game_world.remove_object(monster)
+
+    for obstacle in obstacles:
+        if collide(hero, obstacle):
+            hero.life -= 1
+            game_world.remove_object(obstacle)
+
+    if hero.life == 0:
+        game_framework.push_state(result_state)
 
 
 def draw():
