@@ -30,7 +30,7 @@ def fill_smash_location(hero):
 
 # Hero Move Speed
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-MOVE_SPEED_KMPH = 20.0  # Km / Hour
+MOVE_SPEED_KMPH = 30.0  # Km / Hour
 MOVE_SPEED_MPM = (MOVE_SPEED_KMPH * 1000.0 / 60.0)
 MOVE_SPEED_MPS = (MOVE_SPEED_MPM / 60.0)
 MOVE_SPEED_PPS = (MOVE_SPEED_MPS * PIXEL_PER_METER)
@@ -130,7 +130,7 @@ class MoveState:
 
     @staticmethod
     def do(hero):
-        hero.x += hero.velocity_x*game_framework.frame_time
+        hero.x += hero.velocity_x * game_framework.frame_time
         hero.x = clamp(25, hero.x, 800 - 25)
         hero.y += hero.velocity_y * game_framework.frame_time
         hero.y = clamp(25, hero.y, 600 - 25)
@@ -143,10 +143,7 @@ class MoveState:
 class SmashState:
     @staticmethod
     def enter(hero, event):
-        global smash_line
-        hero.timer = 200
-        fill_smash_location(hero)
-        print(len(smash_line))
+        pass
 
     @staticmethod
     def exit(hero, event):
@@ -154,17 +151,12 @@ class SmashState:
 
     @staticmethod
     def do(hero):
-        hero.timer -= 1
-        if hero.timer == 0:
-            hero.timer = 200
-        hero.x = smash_line[200 - hero.timer][0]
-        hero.y = smash_line[200 - hero.timer][1]
-        if hero.x == smash_line[199][0]:
-            hero.add_event(SPACE_UP)
+        hero.x = hero.x
+        hero.y -= 600-hero.y+25
 
     @staticmethod
     def draw(hero):
-        hero.image.draw(hero.x, hero.y)
+        hero.image.draw(hero.x, hero.y, 50, 50)
 
 
 next_state_table = {
@@ -177,8 +169,13 @@ next_state_table = {
     MoveState: {RIGHT_DOWN: IdleState, RIGHT_UP: IdleState,
                 LEFT_DOWN: IdleState, LEFT_UP: IdleState,
                 UP_DOWN: IdleState, UP_UP: IdleState,
-                DOWN_DOWN: IdleState, DOWN_UP: IdleState},
-    SmashState: {},
+                DOWN_DOWN: IdleState, DOWN_UP: IdleState,
+                SPACE_DOWN: SmashState, SPACE_UP: MoveState},
+    SmashState: {RIGHT_DOWN: SmashState, RIGHT_UP: IdleState,
+                 LEFT_DOWN: SmashState, LEFT_UP: IdleState,
+                 UP_DOWN: SmashState, UP_UP: IdleState,
+                 DOWN_DOWN: SmashState, DOWN_UP: IdleState,
+                 SPACE_DOWN: SmashState, SPACE_UP: SmashState},
 }
 
 
@@ -198,7 +195,7 @@ class Hero:
         self.cur_state.enter(self, None)
 
     def get_bb(self):
-        return self.x - 25, self.y -25, self.x + 25, self.y + 25
+        return self.x - 25, self.y - 25, self.x + 25, self.y + 25
 
     def change_state(self, state):
         if len(self.event_que) > 0:
