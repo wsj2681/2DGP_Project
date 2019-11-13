@@ -2,7 +2,7 @@ from pico2d import *
 
 import game_framework
 import game_world
-import title_state
+import start_state
 
 name = "ResultState"
 image = None
@@ -10,12 +10,12 @@ image = None
 
 def enter():
     global image
-
     image = load_image('Images/gameover.png')
 
 
 def exit():
-    game_world.remove_object(game_world.all_objects())
+    global image
+    del image
 
 
 def update():
@@ -33,7 +33,7 @@ def handle_events():
     events = get_events()
     for event in events:
         if event.type == SDL_KEYDOWN and event.key == SDLK_r:
-            game_framework.change_state(title_state)
+            game_framework.change_state(start_state)
             print("game restart")
         if event.type == SDL_KEYDOWN and event.key == SDLK_q:
             game_framework.quit()

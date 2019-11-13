@@ -72,8 +72,6 @@ def handle_events():
         if event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.push_state(pause_state)
             print("go pause state")
-        if event.type == SDL_KEYDOWN and event.key == SDLK_y:
-            game_framework.push_state(result_state)
         else:
             hero.handle_events(event)
 
@@ -83,15 +81,15 @@ def update():
         game_object.update()
     for monster in monsters:
         if collide(hero, monster):
+            monster.x, monster.y = 0, 0
             game_world.remove_object(monster)
-
     for obstacle in obstacles:
         if collide(hero, obstacle):
-            hero.life -= 1
+            obstacle.x, obstacle.y = 0, 0
             game_world.remove_object(obstacle)
-
-    if hero.life == 0:
-        game_framework.push_state(result_state)
+            ui_hp.life -= 1
+    if ui_hp.life == 0:
+        game_framework.change_state(result_state)
 
 
 def draw():
