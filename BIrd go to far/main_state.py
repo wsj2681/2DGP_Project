@@ -1,5 +1,4 @@
 from pico2d import *
-
 import game_framework
 import pause_state
 import result_state
@@ -10,13 +9,20 @@ from Monster import Monster
 from Obstacle import Obstacle
 from UI_Hp import Hp
 import game_world
+from egg import Egg
+from UI_Score import Score
+import Ground
 
 name = "MainState"
+
 
 hero = None
 item = None
 ui_hp = None
+ui_score = None
 background = None
+ground = None
+eggs = []
 monsters = []
 obstacles = []
 
@@ -38,16 +44,19 @@ def collide(a, b):
 
 
 def enter():
-    global hero, background, item, monsters, obstacles, ui_hp
+    global hero, background, item, monsters, obstacles, ui_hp, ui_score, ground
 
     background = Map.Map()
     game_world.add_object(background, 0)
+    ground = Ground.Ground()
+    game_world.add_object(ground, 0)
+
     hero = Hero.Hero()
     game_world.add_object(hero, 1)
 
-    monsters = [Monster() for i in range(4)]
+    monsters = [Monster() for i in range(50)]
     game_world.add_objects(monsters, 1)
-    obstacles = [Obstacle() for i in range(4)]
+    obstacles = [Obstacle() for i in range(50)]
     game_world.add_objects(obstacles, 1)
 
     '''
@@ -55,7 +64,8 @@ def enter():
         item = Item.Item()
         game_world.add_object(item, 1)
     '''
-
+    ui_score = Score()
+    game_world.add_object(ui_score, 2)
     ui_hp = Hp()
     game_world.add_object(ui_hp, 2)
 
@@ -79,10 +89,21 @@ def handle_events():
 def update():
     for game_object in game_world.all_objects():
         game_object.update()
+        if isinstance(game_object, Egg):
+            eggs.append(game_object)
+
     for monster in monsters:
-        if collide(hero, monster):
-            monster.x, monster.y = 0, 0
-            game_world.remove_object(monster)
+        for egg in eggs:
+            if collide(egg, monster):
+                print('collide')
+                monster.x, monster.y = 0, 0
+                egg.x, egg.y = -100, 0
+                game_world.remove_object(monster)
+                monsters.remove(monster)
+                game_world.remove_object(egg)
+                eggs.remove(egg)
+                ui_score.score += 100
+
     for obstacle in obstacles:
         if collide(hero, obstacle):
             obstacle.x, obstacle.y = 0, 0
@@ -100,4 +121,6 @@ def draw():
 
 
 def pause(): pass
+
+
 def resume(): pass

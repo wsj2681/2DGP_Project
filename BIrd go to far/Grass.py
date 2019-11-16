@@ -1,5 +1,5 @@
 from pico2d import *
-
+import game_framework
 # 땅 좌표 y = 25
 
 
@@ -9,7 +9,7 @@ class Map:
         self.x, self.y = 0, 300
 
     def update(self):
-        self.x -= 5
+        self.x -= 500 * game_framework.frame_time
         if self.x < 0:
             self.x = 800
 
