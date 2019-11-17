@@ -3,14 +3,19 @@ from pico2d import *
 import game_framework
 import game_world
 import start_state
+import UI_Score
 
 name = "ResultState"
 image = None
+font = None
+ui_score = None
 
 
 def enter():
-    global image
-    image = load_image('Images/gameover.png')
+    global image, font, ui_score
+    image = load_image('Images/result.png')
+    font = load_font('ENCR10B.TTF', 16)
+    ui_score = UI_Score.Score()
 
 
 def exit():
@@ -26,6 +31,7 @@ def draw():
     global image
     clear_canvas()
     image.draw(400, 300)
+    font.draw(350, 250, 'Score: %3.f' % ui_score.score, (255, 0, 0))
     update_canvas()
 
 

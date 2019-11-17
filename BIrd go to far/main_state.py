@@ -1,27 +1,26 @@
 from pico2d import *
 import game_framework
+import game_world
 import pause_state
 import result_state
 import Hero
-import Item
 import Map
+import Ground
 from Monster import Monster
 from Obstacle import Obstacle
 from UI_Hp import Hp
-import game_world
 from egg import Egg
 from UI_Score import Score
-import Ground
+import Item
 
 name = "MainState"
 
-
+background = None
+ground = None
 hero = None
 item = None
 ui_hp = None
 ui_score = None
-background = None
-ground = None
 eggs = []
 monsters = []
 obstacles = []
@@ -81,7 +80,6 @@ def handle_events():
             game_framework.quit()
         if event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.push_state(pause_state)
-            print("go pause state")
         else:
             hero.handle_events(event)
 
@@ -95,7 +93,6 @@ def update():
     for monster in monsters:
         for egg in eggs:
             if collide(egg, monster):
-                print('collide')
                 monster.x, monster.y = 0, 0
                 egg.x, egg.y = -100, 0
                 game_world.remove_object(monster)
@@ -109,7 +106,7 @@ def update():
             obstacle.x, obstacle.y = 0, 0
             game_world.remove_object(obstacle)
             ui_hp.life -= 1
-    if ui_hp.life == 100:
+    if ui_hp.life == 10:
         game_framework.change_state(result_state)
 
 

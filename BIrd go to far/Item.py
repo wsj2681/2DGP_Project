@@ -10,3 +10,21 @@ from pico2d import *
 class Item:
     def __init__(self):
         pass
+
+    def draw(self):
+        pass
+
+    def update(self):
+        pass
+
+
+class Heart(Item):
+    def __init__(self):
+        pass
+
+    def draw(self):
+        pass
+
+    def update(self):
+        pass
+

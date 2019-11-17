@@ -4,7 +4,6 @@ import game_world
 import game_framework
 from egg import Egg
 
-
 # Hero Move Speed
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
 MOVE_SPEED_KMPH = 30.0  # Km / Hour
@@ -66,7 +65,7 @@ class IdleState:
     @staticmethod
     def do(hero):
         hero.timer -= 1
-
+        hero.frame = (hero.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 5
         if hero.timer == 0:
             hero.dir *= -1
             hero.timer = 10
@@ -78,7 +77,7 @@ class IdleState:
 
     @staticmethod
     def draw(hero):
-        hero.image.draw(hero.x, hero.y, 50, 50)
+        hero.image.clip_draw(int(hero.frame) * 70, 0, 80, 80, hero.x, hero.y)
 
 
 class MoveState:
@@ -114,9 +113,11 @@ class MoveState:
         hero.y += hero.velocity_y * game_framework.frame_time
         hero.y = clamp(150, hero.y, 600 - 25)
 
+        hero.frame = (hero.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 5
+
     @staticmethod
     def draw(hero):
-        hero.image.draw(hero.x, hero.y, 50, 50)
+        hero.image.clip_draw(int(hero.frame) * 70, 0, 80, 80, hero.x, hero.y)
 
 
 next_state_table = {
@@ -138,7 +139,7 @@ class Hero:
 
     def __init__(self):
         self.x, self.y = 400, 300
-        self.image = load_image('Images/45.png')
+        self.image = load_image('Images/red.png')
         self.life = 3
         self.velocity_x = 0
         self.velocity_y = 0
@@ -152,7 +153,7 @@ class Hero:
         self.cur_state.enter(self, None)
 
     def get_bb(self):
-        return self.x - 25, self.y - 25, self.x + 25, self.y + 25
+        return self.x - 40, self.y - 40, self.x + 40, self.y + 40
 
     def change_state(self, state):
         if len(self.event_que) > 0:
