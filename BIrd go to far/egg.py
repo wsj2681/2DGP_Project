@@ -22,5 +22,5 @@ class Egg:
         self.y -= self.velocity * game_framework.frame_time
 
         if self.y < 50:
-            self.x = - 100
+            self.x = 25
             game_world.remove_object(self)

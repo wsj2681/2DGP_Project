@@ -87,18 +87,16 @@ def handle_events():
 def update():
     for game_object in game_world.all_objects():
         game_object.update()
-        if isinstance(game_object, Egg):
-            eggs.append(game_object)
 
     for monster in monsters:
         for egg in eggs:
             if collide(egg, monster):
                 monster.x, monster.y = 0, 0
                 egg.x, egg.y = -100, 0
-                game_world.remove_object(monster)
                 monsters.remove(monster)
-                game_world.remove_object(egg)
+                game_world.remove_object(monster)
                 eggs.remove(egg)
+                game_world.remove_object(egg)
                 ui_score.score += 100
 
     for obstacle in obstacles:

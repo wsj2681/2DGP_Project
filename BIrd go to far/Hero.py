@@ -3,6 +3,7 @@ import curve_movement
 import game_world
 import game_framework
 from egg import Egg
+import main_state
 
 # Hero Move Speed
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
@@ -61,6 +62,7 @@ class IdleState:
         if event == SPACE:
             egg = Egg(hero.x, hero.y, 100)
             game_world.add_object(egg, 1)
+            main_state.eggs.append(egg)
 
     @staticmethod
     def do(hero):
@@ -105,6 +107,7 @@ class MoveState:
         if event == SPACE:
             egg = Egg(hero.x, hero.y, 100)
             game_world.add_object(egg, 1)
+            main_state.eggs.append(egg)
 
     @staticmethod
     def do(hero):
@@ -133,7 +136,6 @@ next_state_table = {
                 DOWN_DOWN: IdleState, DOWN_UP: IdleState,
                 SPACE: MoveState},
 }
-
 
 class Hero:
 
