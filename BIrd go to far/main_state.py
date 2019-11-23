@@ -104,7 +104,8 @@ def update():
             obstacle.x, obstacle.y = 0, 0
             game_world.remove_object(obstacle)
             ui_hp.life -= 1
-    if ui_hp.life == 10:
+
+    if ui_hp.life == 0:
         game_framework.change_state(result_state)
 
 
