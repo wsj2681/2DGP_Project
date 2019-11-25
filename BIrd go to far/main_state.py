@@ -10,23 +10,21 @@ import Ground
 from Monster import Monster
 from Obstacle import Obstacle
 from UI_Hp import Hp
-from egg import Egg
+from fire_ball import Fireball
 from UI_Score import Score
-import Item
+from Item import Item
 
 name = "MainState"
 
 background = None
 ground = None
 hero = None
-item = None
+itemes = []
 ui_hp = None
-ui_score = None
-eggs = []
+ui_score = 0.0
+balls = []
 monsters = []
 obstacles = []
-
-
 
 
 def collide(a, b):
@@ -46,7 +44,7 @@ def collide(a, b):
 
 
 def enter():
-    global hero, background, item, monsters, obstacles, ui_hp, ui_score, ground
+    global hero, background, itemes, monsters, obstacles, ui_hp, ui_score, ground
 
     background = Map.Map()
     game_world.add_object(background, 0)
@@ -61,13 +59,12 @@ def enter():
     obstacles = [Obstacle() for i in range(50)]
     game_world.add_objects(obstacles, 1)
 
-    '''
-    for i in range(4):
-        item = Item.Item()
-        game_world.add_object(item, 1)
-    '''
+    itemes = [Item() for i in range(5)]
+    game_world.add_objects(itemes, 1)
+
     ui_score = Score()
     game_world.add_object(ui_score, 2)
+
     ui_hp = Hp()
     game_world.add_object(ui_hp, 2)
 
@@ -96,23 +93,31 @@ def update():
         game_object.update()
 
     for monster in monsters:
-        for egg in eggs:
-            if collide(egg, monster):
+        for ball in balls:
+            if collide(ball, monster):
                 monster.x, monster.y = 0, 0
-                egg.x, egg.y = -100, 0
+                ball.x, ball.y = -100, 0
                 monsters.remove(monster)
-                game_world.remove_object(monster)
-                eggs.remove(egg)
-                game_world.remove_object(egg)
-                ui_score.score += 100
+                monster.remove()
+                balls.remove(ball)
+                game_world.remove_object(ball)
+                ui_score.score += 100.0
 
     for obstacle in obstacles:
         if collide(hero, obstacle):
             obstacle.x, obstacle.y = 0, 0
+            obstacles.remove(obstacle)
             game_world.remove_object(obstacle)
             ui_hp.life -= 1
 
-    if ui_hp.life == 0:
+    for item in itemes:
+        if collide(item, hero):
+            item.x, item.y = 0, 0
+            itemes.remove(item)
+            item.remove()
+            ui_hp.life += 1
+
+    if ui_hp.life == 10:
         game_framework.change_state(result_state)
 
     if len(monsters) == 0:

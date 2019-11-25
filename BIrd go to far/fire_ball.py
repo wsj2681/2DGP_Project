@@ -3,13 +3,13 @@ import game_framework
 import game_world
 
 
-class Egg:
+class Fireball:
     image = None
 
     def __init__(self, x=400, y=300, velocity=1):
         self.x, self.y, self.velocity = x, y, velocity
-        if Egg.image is None:
-            Egg.image = load_image('Images/boom.png')
+        if Fireball.image is None:
+            Fireball.image = load_image('Images/fire_ball.png')
 
     def draw(self):
         self.image.draw(self.x, self.y, 24, 24)

@@ -1,7 +1,7 @@
 from pico2d import *
 import game_world
 import game_framework
-from egg import Egg
+from fire_ball import Fireball
 import main_state
 
 # Hero Move Speed
@@ -59,9 +59,9 @@ class IdleState:
     @staticmethod
     def exit(hero, event):
         if event == SPACE:
-            egg = Egg(hero.x, hero.y, 300)
-            game_world.add_object(egg, 1)
-            main_state.eggs.append(egg)
+            fireball = Fireball(hero.x, hero.y, 300)
+            game_world.add_object(fireball, 1)
+            main_state.balls.append(fireball)
 
     @staticmethod
     def do(hero):
@@ -104,9 +104,9 @@ class MoveState:
     @staticmethod
     def exit(hero, event):
         if event == SPACE:
-            egg = Egg(hero.x, hero.y, 300)
-            game_world.add_object(egg, 1)
-            main_state.eggs.append(egg)
+            fireball = Fireball(hero.x, hero.y, 300)
+            game_world.add_object(fireball, 1)
+            main_state.balls.append(fireball)
 
     @staticmethod
     def do(hero):
