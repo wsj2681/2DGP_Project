@@ -2,9 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5b885e0-3cee-4c85-967a-e9448c6871ae" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Clear_state.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/Hero.png" beforeDir="false" afterPath="$PROJECT_DIR$/Images/Hero.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Obstacle.py" beforeDir="false" afterPath="$PROJECT_DIR$/Obstacle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/heart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/pause.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/pause_sel.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/result.png" beforeDir="false" afterPath="$PROJECT_DIR$/Images/result.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/result_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/result_state.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

@@ -3,6 +3,7 @@ import game_framework
 import game_world
 import pause_state
 import result_state
+import Clear_state
 import Hero
 import Map
 import Ground
@@ -24,6 +25,8 @@ ui_score = None
 eggs = []
 monsters = []
 obstacles = []
+
+
 
 
 def collide(a, b):
@@ -69,6 +72,10 @@ def enter():
     game_world.add_object(ui_hp, 2)
 
 
+def get_score():
+    return ui_score
+
+
 def exit():
     game_world.clear()
 
@@ -107,6 +114,9 @@ def update():
 
     if ui_hp.life == 0:
         game_framework.change_state(result_state)
+
+    if len(monsters) == 0:
+        game_framework.change_state(Clear_state)
 
 
 def draw():
