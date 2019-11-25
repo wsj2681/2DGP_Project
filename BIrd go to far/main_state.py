@@ -70,7 +70,7 @@ def enter():
 
 
 def get_score():
-    return ui_score
+    return ui_score.score
 
 
 def exit():
@@ -117,7 +117,7 @@ def update():
             item.remove()
             ui_hp.life += 1
 
-    if ui_hp.life == 10:
+    if ui_hp.life == 0:
         game_framework.change_state(result_state)
 
     if len(monsters) == 0:
