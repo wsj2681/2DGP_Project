@@ -14,7 +14,7 @@ MOVE_SPEED_PPS = (MOVE_SPEED_MPS * PIXEL_PER_METER)
 # Hero Action Speed
 TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
-FRAMES_PER_ACTION = 8
+FRAMES_PER_ACTION = 6
 
 # Hero Event
 # 상하좌우 이동가능
@@ -78,7 +78,7 @@ class IdleState:
 
     @staticmethod
     def draw(hero):
-        hero.image.clip_draw(int(hero.frame) * 70, 0, 80, 80, hero.x, hero.y)
+        hero.image.clip_draw(int(hero.frame) * 35, 0, 35, 50, hero.x, hero.y)
 
 
 class MoveState:
@@ -119,7 +119,7 @@ class MoveState:
 
     @staticmethod
     def draw(hero):
-        hero.image.clip_draw(int(hero.frame) * 70, 0, 80, 80, hero.x, hero.y)
+        hero.image.clip_draw(int(hero.frame) * 35, 0, 35, 50, hero.x, hero.y)
 
 
 next_state_table = {
@@ -141,7 +141,7 @@ class Hero:
 
     def __init__(self):
         self.x, self.y = 400, 300
-        self.image = load_image('Images/red.png')
+        self.image = load_image('Images/Hero.png')
         self.life = 3
         self.velocity_x = 0
         self.velocity_y = 0
@@ -155,7 +155,7 @@ class Hero:
         self.cur_state.enter(self, None)
 
     def get_bb(self):
-        return self.x - 40, self.y - 40, self.x + 40, self.y + 40
+        return self.x - 13, self.y - 23, self.x + 10, self.y + 8
 
     def change_state(self, state):
         if len(self.event_que) > 0:
