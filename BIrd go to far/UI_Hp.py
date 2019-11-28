@@ -15,7 +15,7 @@ class Hp:
         pass
 
     def draw(self):
-        if self.life == 3:
+        if self.life >= 3:
             self.hp_o.draw(self.x, self.y, 50, 50)
             self.hp_o.draw(self.x + 50, self.y, 50, 50)
             self.hp_o.draw(self.x + 100, self.y, 50, 50)

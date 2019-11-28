@@ -40,17 +40,18 @@ class IdleState:
     def enter(hero, event):
         if event == RIGHT_DOWN:
             hero.velocity_x += MOVE_SPEED_PPS
-        elif event == LEFT_DOWN:
-            hero.velocity_x -= MOVE_SPEED_PPS
         elif event == RIGHT_UP:
+            hero.velocity_x -= MOVE_SPEED_PPS
+        if event == LEFT_DOWN:
             hero.velocity_x -= MOVE_SPEED_PPS
         elif event == LEFT_UP:
             hero.velocity_x += MOVE_SPEED_PPS
-        elif event == UP_DOWN:
+
+        if event == UP_DOWN:
             hero.velocity_y += MOVE_SPEED_PPS
-        elif event == DOWN_DOWN:
-            hero.velocity_y -= MOVE_SPEED_PPS
         elif event == UP_UP:
+            hero.velocity_y -= MOVE_SPEED_PPS
+        if event == DOWN_DOWN:
             hero.velocity_y -= MOVE_SPEED_PPS
         elif event == DOWN_UP:
             hero.velocity_y += MOVE_SPEED_PPS
@@ -76,6 +77,10 @@ class IdleState:
         elif hero.dir is 1:
             hero.y += 1
 
+        hero.x += hero.velocity_x * game_framework.frame_time
+        hero.x = clamp(25, hero.x, 800 - 25)
+        hero.y += hero.velocity_y * game_framework.frame_time
+        hero.y = clamp(150, hero.y, 600 - 25)
     @staticmethod
     def draw(hero):
         hero.image.clip_draw(int(hero.frame) * 35, 0, 35, 50, hero.x, hero.y)
@@ -86,17 +91,18 @@ class MoveState:
     def enter(hero, event):
         if event == RIGHT_DOWN:
             hero.velocity_x += MOVE_SPEED_PPS
-        elif event == LEFT_DOWN:
-            hero.velocity_x -= MOVE_SPEED_PPS
         elif event == RIGHT_UP:
+            hero.velocity_x -= MOVE_SPEED_PPS
+        if event == LEFT_DOWN:
             hero.velocity_x -= MOVE_SPEED_PPS
         elif event == LEFT_UP:
             hero.velocity_x += MOVE_SPEED_PPS
-        elif event == UP_DOWN:
+
+        if event == UP_DOWN:
             hero.velocity_y += MOVE_SPEED_PPS
-        elif event == DOWN_DOWN:
-            hero.velocity_y -= MOVE_SPEED_PPS
         elif event == UP_UP:
+            hero.velocity_y -= MOVE_SPEED_PPS
+        if event == DOWN_DOWN:
             hero.velocity_y -= MOVE_SPEED_PPS
         elif event == DOWN_UP:
             hero.velocity_y += MOVE_SPEED_PPS
@@ -123,16 +129,16 @@ class MoveState:
 
 
 next_state_table = {
-    IdleState: {RIGHT_DOWN: MoveState, RIGHT_UP: MoveState,
-                LEFT_DOWN: MoveState, LEFT_UP: MoveState,
-                UP_DOWN: MoveState, UP_UP: MoveState,
-                DOWN_DOWN: MoveState, DOWN_UP: MoveState,
+    IdleState: {RIGHT_DOWN: MoveState, RIGHT_UP: IdleState,
+                LEFT_DOWN: MoveState, LEFT_UP: IdleState,
+                UP_DOWN: MoveState, UP_UP: IdleState,
+                DOWN_DOWN: MoveState, DOWN_UP: IdleState,
                 SPACE: IdleState},
 
-    MoveState: {RIGHT_DOWN: IdleState, RIGHT_UP: IdleState,
-                LEFT_DOWN: IdleState, LEFT_UP: IdleState,
-                UP_DOWN: IdleState, UP_UP: IdleState,
-                DOWN_DOWN: IdleState, DOWN_UP: IdleState,
+    MoveState: {RIGHT_DOWN: MoveState, RIGHT_UP: IdleState,
+                LEFT_DOWN: MoveState, LEFT_UP: IdleState,
+                UP_DOWN: MoveState, UP_UP: IdleState,
+                DOWN_DOWN: MoveState, DOWN_UP: IdleState,
                 SPACE: MoveState},
 }
 
