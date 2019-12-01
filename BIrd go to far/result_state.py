@@ -1,9 +1,11 @@
 from pico2d import *
 
 import game_framework
-import start_state
+import title_state
 import main_state
+
 name = "ResultState"
+
 image = None
 font = None
 
@@ -35,11 +37,9 @@ def handle_events():
     events = get_events()
     for event in events:
         if event.type == SDL_KEYDOWN and event.key == SDLK_r:
-            game_framework.change_state(start_state)
-            print("game restart")
+            game_framework.change_state(title_state)
         if event.type == SDL_KEYDOWN and event.key == SDLK_q:
             game_framework.quit()
-            print("game over")
 
 
 def pause(): pass

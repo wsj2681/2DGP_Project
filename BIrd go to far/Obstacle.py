@@ -27,5 +27,5 @@ class Obstacle:
 
     def draw(self):
         self.image.clip_draw(int(self.frame) * 40, 0, 40, 48, self.x, self.y)
-        draw_rectangle(*self.get_bb())
+        # draw_rectangle(*self.get_bb())
 

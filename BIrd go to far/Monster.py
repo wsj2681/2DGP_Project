@@ -28,7 +28,7 @@ class Monster:
 
     def draw(self):
         self.image.clip_draw(int(self.frame) * 64, 0, 64, 64, self.x, self.y)
-        draw_rectangle(*self.get_bb())
+        # draw_rectangle(*self.get_bb())
 
     def remove(self):
         game_world.remove_object(self)

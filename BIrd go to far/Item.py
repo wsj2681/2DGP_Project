@@ -18,7 +18,7 @@ class Item:
 
     def draw(self):
         self.image.draw(self.x, self.y, 50, 50)
-        draw_rectangle(*self.get_bb())
+        # draw_rectangle(*self.get_bb())
 
     def update(self):
         self.x -= self.random_x * game_framework.frame_time
