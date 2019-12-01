@@ -1,5 +1,5 @@
 from pico2d import *
-from Hero import *
+from Obejct_Hero import *
 # 충돌에 따른 생명체크
 
 

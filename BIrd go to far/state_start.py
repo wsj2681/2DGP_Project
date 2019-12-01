@@ -1,16 +1,15 @@
 from pico2d import *
-
 import game_framework
-import start_state
-import UI_Score
+import state_title
 
-name = "ClearState"
+name = "StartState"
 image = None
+logo_time = 0.0
 
 
 def enter():
     global image
-    image = load_image('Images/clear.png')
+    image = load_image('Images/kpu_credit.png')
 
 
 def exit():
@@ -19,11 +18,19 @@ def exit():
 
 
 def update():
-    pass
+    global logo_time
+
+    if logo_time > 1.0:
+        logo_time = 0
+        game_framework.change_state(state_title)
+        print("go title state")
+    delay(0.01)
+    logo_time += 0.01
 
 
 def draw():
     global image
+
     clear_canvas()
     image.draw(400, 300)
     update_canvas()
@@ -31,9 +38,7 @@ def draw():
 
 def handle_events():
     events = get_events()
-    for event in events:
-        if event.type == SDL_KEYDOWN:
-            game_framework.change_state(start_state)
+    pass
 
 
 def pause(): pass

@@ -1,16 +1,16 @@
 from pico2d import *
 import game_framework
 import game_world
-import pause_state
-import result_state
-import Clear_state
-import Hero
+import state_pause
+import state_result
+import state_clear
+import Obejct_Hero
 import Map
 import Ground
-from Monster import Monster
-from Obstacle import Obstacle
+from Object_Monster import Monster
+from Object_Obstacle import Obstacle
 from UI_Hp import Hp
-from fire_ball import Fireball
+from Object_Fireball import Fireball
 from UI_Score import Score
 from Item import Item
 
@@ -51,7 +51,7 @@ def enter():
     ground = Ground.Ground()
     game_world.add_object(ground, 0)
 
-    hero = Hero.Hero()
+    hero = Obejct_Hero.Hero()
     game_world.add_object(hero, 1)
 
     monsters = [Monster() for i in range(50)]
@@ -83,7 +83,7 @@ def handle_events():
         if event.type == SDL_QUIT:
             game_framework.quit()
         if event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-            game_framework.push_state(pause_state)
+            game_framework.push_state(state_pause)
         else:
             hero.handle_events(event)
 
@@ -118,10 +118,10 @@ def update():
             ui_hp.life += 1
 
     if ui_hp.life == 0:
-        game_framework.change_state(result_state)
+        game_framework.change_state(state_result)
 
     if len(monsters) == 0:
-        game_framework.change_state(Clear_state)
+        game_framework.change_state(state_clear)
 
 
 def draw():

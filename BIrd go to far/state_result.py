@@ -1,8 +1,8 @@
 from pico2d import *
 
 import game_framework
-import title_state
-import main_state
+import state_title
+import state_main
 
 name = "ResultState"
 
@@ -29,7 +29,7 @@ def draw():
     global image, font
     clear_canvas()
     image.draw(400, 300)
-    font.draw(350, 250, 'Score: %3.f' % main_state.get_score(), (255, 0, 0))
+    font.draw(350, 250, 'Score: %3.f' % state_main.get_score(), (255, 0, 0))
     update_canvas()
 
 
@@ -37,7 +37,7 @@ def handle_events():
     events = get_events()
     for event in events:
         if event.type == SDL_KEYDOWN and event.key == SDLK_r:
-            game_framework.change_state(title_state)
+            game_framework.change_state(state_title)
         if event.type == SDL_KEYDOWN and event.key == SDLK_q:
             game_framework.quit()
 

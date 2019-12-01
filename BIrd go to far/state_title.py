@@ -1,7 +1,7 @@
 from pico2d import *
 
 import game_framework
-import main_state
+import state_main
 import game_world
 name = "TitleState"
 image = None
@@ -27,7 +27,7 @@ def handle_events():
             if(event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
                 game_framework.quit()
             elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_SPACE):
-                game_framework.change_state(main_state)
+                game_framework.change_state(state_main)
                 print("go main_state")
 
 

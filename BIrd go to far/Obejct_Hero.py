@@ -1,8 +1,8 @@
 from pico2d import *
 import game_world
 import game_framework
-from fire_ball import Fireball
-import main_state
+from Object_Fireball import Fireball
+import state_main
 
 # Hero Move Speed
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
@@ -62,7 +62,7 @@ class IdleState:
         if event == SPACE:
             fireball = Fireball(hero.x, hero.y, 300)
             game_world.add_object(fireball, 1)
-            main_state.balls.append(fireball)
+            state_main.balls.append(fireball)
 
     @staticmethod
     def do(hero):
@@ -112,7 +112,7 @@ class MoveState:
         if event == SPACE:
             fireball = Fireball(hero.x, hero.y, 300)
             game_world.add_object(fireball, 1)
-            main_state.balls.append(fireball)
+            state_main.balls.append(fireball)
 
     @staticmethod
     def do(hero):
