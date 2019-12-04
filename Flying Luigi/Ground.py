@@ -1,5 +1,7 @@
 from pico2d import *
 import game_framework
+import random
+
 
 # image_right size = x:2691, y:59
 class Ground:
@@ -21,3 +23,17 @@ class Ground:
 
     def get_bb(self):
         return self.x - 2691//2, self.y - 30, self.x + 2691//2, self.y + 30
+
+
+class Mountain:
+    def __init__(self):
+        self.image = load_image('Images/mountain.png')
+        self.x, self.y = random.randint(500, 1500), 30
+
+    def draw(self):
+        self.image.draw(self.x, self.y, 500, 188)
+
+    def update(self):
+        self.x -= 150 * game_framework.frame_time
+        if self.x < -500:
+            self.x = random.randint(500, 1500)

@@ -9,6 +9,7 @@ import Map
 import Ground
 from Map import Cloud
 from Map import Cloud2
+from Ground import Mountain
 from Object_Monster import Monster
 from Object_Obstacle import Obstacle
 from UI_Hp import Hp
@@ -19,6 +20,7 @@ name = "MainState"
 
 background = None
 ground = None
+mountain = None
 cloudes = []
 cloudes2 = []
 hero = None
@@ -49,10 +51,13 @@ def collide(a, b):
 
 
 def enter():
-
     global background
     background = Map.Map()
     game_world.add_object(background, 0)
+
+    global mountain
+    mountain = Mountain()
+    game_world.add_object(mountain, 0)
 
     global ground
     ground = Ground.Ground()
