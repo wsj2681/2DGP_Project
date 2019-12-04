@@ -63,6 +63,7 @@ class IdleState:
             fireball = Fireball(hero.x, hero.y, 300)
             game_world.add_object(fireball, 1)
             state_main.balls.append(fireball)
+            hero.fireball()
 
     @staticmethod
     def do(hero):
@@ -113,6 +114,7 @@ class MoveState:
             fireball = Fireball(hero.x, hero.y, 300)
             game_world.add_object(fireball, 1)
             state_main.balls.append(fireball)
+            hero.fireball()
 
     @staticmethod
     def do(hero):
@@ -160,8 +162,29 @@ class Hero:
         self.cur_state = IdleState
         self.cur_state.enter(self, None)
 
+        self.fireball_sound = load_wav('Sound/Fireball.wav')
+        self.fireball_sound.set_volume(32)
+        self.pickup_sound = load_wav('Sound/Heart_Up.wav')
+        self.pickup_sound.set_volume(32)
+        self.collide_obstacle_sound = load_wav('Sound/Hit.wav')
+        self.collide_obstacle_sound.set_volume(32)
+        self.death_sound = load_wav('Sound/Die.wav')
+        self.death_sound.set_volume(32)
+
     def get_bb(self):
         return self.x - 13, self.y - 23, self.x + 10, self.y + 8
+
+    def fireball(self):
+        self.fireball_sound.play()
+
+    def pick_heart(self):
+        self.pickup_sound.play()
+
+    def collide_obstacle(self):
+        self.collide_obstacle_sound.play()
+
+    def die(self):
+        self.death_sound.play()
 
     def change_state(self, state):
         if len(self.event_que) > 0:

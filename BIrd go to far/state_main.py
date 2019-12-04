@@ -12,7 +12,7 @@ from Object_Obstacle import Obstacle
 from UI_Hp import Hp
 from Object_Fireball import Fireball
 from UI_Score import Score
-from Item import Item
+from Object_Item import Item
 
 name = "MainState"
 
@@ -108,6 +108,7 @@ def update():
             obstacle.x, obstacle.y = 0, 0
             obstacles.remove(obstacle)
             game_world.remove_object(obstacle)
+            hero.collide_obstacle()
             ui_hp.life -= 1
 
     for item in itemes:
@@ -115,9 +116,13 @@ def update():
             item.x, item.y = 0, 0
             itemes.remove(item)
             item.remove()
+            hero.pick_heart()
             ui_hp.life += 1
 
     if ui_hp.life == 0:
+        ground.bgm.set_volume(0)
+        hero.die()
+        delay(3.0)
         game_framework.change_state(state_result)
 
     if len(monsters) == 0:

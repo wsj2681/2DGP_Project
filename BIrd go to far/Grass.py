@@ -8,6 +8,7 @@ class Map:
         self.image = load_image('Images/background.png')
         self.x, self.y = 0, 300
 
+
     def update(self):
         self.x -= 500 * game_framework.frame_time
         if self.x < 0:
