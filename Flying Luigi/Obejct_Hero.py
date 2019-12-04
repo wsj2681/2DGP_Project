@@ -70,21 +70,32 @@ class IdleState:
         hero.timer -= 1
         hero.frame = (hero.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 5
         if hero.timer == 0:
-            hero.dir *= -1
+            hero.sleep *= -1
             hero.timer = 10
 
-        if hero.dir is -1:
+        if hero.sleep is -1:
             hero.y -= 1
-        elif hero.dir is 1:
+        elif hero.sleep is 1:
             hero.y += 1
 
         hero.x += hero.velocity_x * game_framework.frame_time
         hero.x = clamp(25, hero.x, 800 - 25)
         hero.y += hero.velocity_y * game_framework.frame_time
         hero.y = clamp(150, hero.y, 600 - 25)
+
     @staticmethod
     def draw(hero):
-        hero.image.clip_draw(int(hero.frame) * 35, 0, 35, 50, hero.x, hero.y)
+        if hero.velocity_x > 0:
+            hero.image_right.clip_draw(int(hero.frame) * 35, 0, 35, 50, hero.x, hero.y)
+            hero.dir = 1
+        elif hero.velocity_x < 0:
+            hero.image_left.clip_draw(int(hero.frame) * 35, 0, 35, 50, hero.x, hero.y)
+            hero.dir = -1
+        else:
+            if hero.dir == 1:
+                hero.image_right.clip_draw(int(hero.frame) * 35, 0, 35, 50, hero.x, hero.y)
+            elif hero.dir == -1:
+                hero.image_left.clip_draw(int(hero.frame) * 35, 0, 35, 50, hero.x, hero.y)
 
 
 class MoveState:
@@ -127,7 +138,19 @@ class MoveState:
 
     @staticmethod
     def draw(hero):
-        hero.image.clip_draw(int(hero.frame) * 35, 0, 35, 50, hero.x, hero.y)
+        if hero.velocity_x > 0:
+            hero.image_right.clip_draw(int(hero.frame) * 35, 0, 35, 50, hero.x, hero.y)
+            hero.dir = 1
+        elif hero.velocity_x < 0:
+            hero.image_left.clip_draw(int(hero.frame) * 35, 0, 35, 50, hero.x, hero.y)
+            hero.dir = -1
+        else:
+            if hero.velocity_y > 0 or hero.velocity_y < 0:
+                if hero.dir == 1:
+                    hero.image_right.clip_draw(int(hero.frame) * 35, 0, 35, 50, hero.x, hero.y)
+                else:
+                    hero.image_left.clip_draw(int(hero.frame) * 35, 0, 35, 50, hero.x, hero.y)
+
 
 
 next_state_table = {
@@ -149,10 +172,12 @@ class Hero:
 
     def __init__(self):
         self.x, self.y = 400, 300
-        self.image = load_image('Images/Hero.png')
+        self.image_right = load_image('Images/Hero_right.png')
+        self.image_left = load_image('Images/Hero_left.png')
         self.life = 3
         self.velocity_x = 0
         self.velocity_y = 0
+        self.sleep = 1
         self.dir = 1
         self.frame = 0
         self.timer = 0
@@ -162,6 +187,7 @@ class Hero:
         self.cur_state = IdleState
         self.cur_state.enter(self, None)
 
+        # Sound
         self.fireball_sound = load_wav('Sound/Fireball.wav')
         self.fireball_sound.set_volume(32)
         self.pickup_sound = load_wav('Sound/Heart_Up.wav')

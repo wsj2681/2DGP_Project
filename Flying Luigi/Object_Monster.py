@@ -11,7 +11,7 @@ class Monster:
     image = None
 
     def __init__(self):
-        self.x, self. y = random.randint(1000, 10000), 60
+        self.x, self. y = random.randint(1000, 10000), 55
         self.random_x = random.randint(100, 700)
         self.frame = 0
         if Monster.image is None:

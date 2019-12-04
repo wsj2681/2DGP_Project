@@ -7,10 +7,11 @@ import state_clear
 import Obejct_Hero
 import Map
 import Ground
+from Map import Cloud
+from Map import Cloud2
 from Object_Monster import Monster
 from Object_Obstacle import Obstacle
 from UI_Hp import Hp
-from Object_Fireball import Fireball
 from UI_Score import Score
 from Object_Item import Item
 
@@ -18,10 +19,14 @@ name = "MainState"
 
 background = None
 ground = None
+cloudes = []
+cloudes2 = []
 hero = None
 itemes = []
+
 ui_hp = None
 ui_score = 0.0
+
 balls = []
 monsters = []
 obstacles = []
@@ -44,27 +49,40 @@ def collide(a, b):
 
 
 def enter():
-    global hero, background, itemes, monsters, obstacles, ui_hp, ui_score, ground
 
+    global background
     background = Map.Map()
     game_world.add_object(background, 0)
+
+    global ground
     ground = Ground.Ground()
     game_world.add_object(ground, 0)
 
+    global cloudes, cloudes2
+    cloudes = [Cloud() for i in range(5)]
+    game_world.add_objects(cloudes, 0)
+
+    global hero
     hero = Obejct_Hero.Hero()
     game_world.add_object(hero, 1)
 
+    global monsters
     monsters = [Monster() for i in range(50)]
     game_world.add_objects(monsters, 1)
+
+    global obstacles
     obstacles = [Obstacle() for i in range(50)]
     game_world.add_objects(obstacles, 1)
 
+    global itemes
     itemes = [Item() for i in range(5)]
     game_world.add_objects(itemes, 1)
 
+    global ui_score
     ui_score = Score()
     game_world.add_object(ui_score, 2)
 
+    global ui_hp
     ui_hp = Hp()
     game_world.add_object(ui_hp, 2)
 
