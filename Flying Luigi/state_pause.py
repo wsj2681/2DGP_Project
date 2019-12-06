@@ -1,7 +1,9 @@
 from pico2d import *
 
 import game_framework
+import game_world
 import state_title
+
 
 name = "PauseState"
 image = None
@@ -32,6 +34,7 @@ def handle_events():
         if event.type == SDL_KEYDOWN and event.key == SDLK_r:
             game_framework.pop_state()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
+            game_world.clear()
             game_framework.change_state(state_title)
 
 

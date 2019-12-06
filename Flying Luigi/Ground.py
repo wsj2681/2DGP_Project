@@ -28,12 +28,12 @@ class Ground:
 class Mountain:
     def __init__(self):
         self.image = load_image('Images/mountain.png')
-        self.x, self.y = random.randint(500, 1500), 30
+        self.x, self.y = random.randint(400, 600), 30
 
     def draw(self):
-        self.image.draw(self.x, self.y, 500, 188)
+        self.image.draw(self.x, self.y, 800, 188)
 
     def update(self):
-        self.x -= 150 * game_framework.frame_time
+        self.x -= 10 * game_framework.frame_time
         if self.x < -500:
-            self.x = random.randint(500, 1500)
+            self.x = random.randint(500, 1000)

@@ -171,7 +171,9 @@ def draw():
     update_canvas()
 
 
-def pause(): pass
+def pause():
+    ground.bgm.set_volume(0)
 
 
-def resume(): pass
+def resume():
+    ground.bgm.set_volume(64)
