@@ -3,7 +3,7 @@ from pico2d import *
 import game_framework
 import state_title
 import state_main
-
+import state_ranking
 name = "ResultState"
 
 image = None
@@ -33,6 +33,7 @@ def draw():
     font.draw(300, 300, 'Score: %1.f' % state_main.get_score(), (0, 0, 255))
     font_24.draw(200, 200, 'Restart(R)', (0, 0, 0))
     font_24.draw(400, 200, 'Quit(ESC)', (0, 0, 0))
+    font_24.draw(300, 150, 'View Ranking(V)', (0, 255, 0))
     update_canvas()
 
 
@@ -43,6 +44,8 @@ def handle_events():
             game_framework.change_state(state_title)
         if event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.quit()
+        if event.type == SDL_KEYDOWN and event.key == SDLK_v:
+            game_framework.change_state(state_ranking)
 
 
 def pause(): pass

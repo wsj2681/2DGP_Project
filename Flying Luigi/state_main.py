@@ -4,11 +4,12 @@ import game_world
 import state_pause
 import state_result
 import state_clear
+import state_ranking
 import Obejct_Hero
 import Map
 import Ground
 from Map import Cloud
-from Map import Cloud2
+# from Map import Cloud2
 from Ground import Mountain
 from Object_Monster import Monster_right
 from Object_Monster import Monster_left
@@ -152,10 +153,11 @@ def update():
             hero.pick_heart()
             ui_hp.life += 1
 
-    if ui_hp.life == 0:
+    if ui_hp.life < 0:
         ground.bgm.set_volume(0)
         hero.die()
         delay(3.0)
+        state_ranking.curr_data = ui_score.score
         game_framework.change_state(state_result)
 
     if len(monsters) == 0:

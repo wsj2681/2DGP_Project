@@ -1,8 +1,8 @@
 from pico2d import *
 
 import game_framework
-import state_start
-import UI_Score
+import state_ranking
+
 
 name = "ClearState"
 image = None
@@ -33,7 +33,7 @@ def handle_events():
     events = get_events()
     for event in events:
         if event.type == SDL_KEYDOWN:
-            game_framework.change_state(state_start)
+            game_framework.change_state(state_ranking)
 
 
 def pause(): pass

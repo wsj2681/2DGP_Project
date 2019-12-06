@@ -12,8 +12,8 @@ class Monster_right:
     image = None
 
     def __init__(self):
-        self.x, self. y = random.randint(1000, 7000), 55
-        self.random_x = random.randint(100, 700)
+        self.x, self. y = random.randint(1500, 7000), 55
+        self.random_x = random.randint(100, 500)
         self.frame = 0
         if Monster_right.image is None:
             Monster_right.image = load_image('Images/Monster_right.png')
@@ -25,7 +25,7 @@ class Monster_right:
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 16
         self.x -= self.random_x * game_framework.frame_time
         if self.x < -100:
-            self. x = random.randint(1000, 7000)
+            self. x = random.randint(1500, 7000)
 
     def draw(self):
         self.image.clip_draw(int(self.frame) * 64, 0, 64, 70, self.x, self.y)
@@ -39,8 +39,8 @@ class Monster_left:
     image = None
 
     def __init__(self):
-        self.x, self. y = random.randint(-7000, -500), 55
-        self.random_x = random.randint(100, 700)
+        self.x, self. y = random.randint(-6000, -500), 55
+        self.random_x = random.randint(100, 500)
         self.frame = 0
         if Monster_left.image is None:
             Monster_left.image = load_image('Images/Monster_left.png')
@@ -52,7 +52,7 @@ class Monster_left:
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 16
         self.x += self.random_x * game_framework.frame_time
         if self.x > 900:
-            self.x, self. y = random.randint(-7000, -500), 55
+            self.x, self. y = random.randint(-6000, -500), 55
 
     def draw(self):
         self.image.clip_draw(int(self.frame) * 64, 0, 64, 70, self.x, self.y)
