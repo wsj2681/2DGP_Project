@@ -12,7 +12,7 @@ class Item:
 
     def __init__(self):
         if Item.image is None:
-            Item.image = load_image('Images/heart.png')
+            Item.image = load_image('Images/life.png')
         self.x, self.y = random.randint(1000, 10000), random.randint(125, 550)
         self.random_x = random.randint(100, 400)
 

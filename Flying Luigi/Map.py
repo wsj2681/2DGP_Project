@@ -31,7 +31,7 @@ class Cloud:
     def update(self):
         self.x -= self.random_x * game_framework.frame_time
         if self.x < -100:
-            self.x = random.randint(800, 1000)
+            self.x, self.y = random.randint(800, 1000), random.randint(300, 600)
 
     def draw(self):
         self.image.draw(self.x, self.y)

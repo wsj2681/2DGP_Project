@@ -5,11 +5,13 @@ import state_main
 import game_world
 name = "TitleState"
 image = None
-
+font = None
 
 def enter():
-    global image
+    global image,font
     image = load_image('Images/title.png')
+
+    font = load_font('DungGeunMo.TTF', 64)
 
 
 def exit():
@@ -34,6 +36,7 @@ def handle_events():
 def draw():
     clear_canvas()
     image.draw(400, 300)
+    font.draw(220, 50, 'Flying Luigi', (0, 0, 0))
     update_canvas()
 
 

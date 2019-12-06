@@ -10,8 +10,10 @@ import Ground
 from Map import Cloud
 from Map import Cloud2
 from Ground import Mountain
-from Object_Monster import Monster
-from Object_Obstacle import Obstacle
+from Object_Monster import Monster_right
+from Object_Monster import Monster_left
+from Object_Obstacle import Obstacle_right
+from Object_Obstacle import Obstacle_left
 from UI_Hp import Hp
 from UI_Score import Score
 from Object_Item import Item
@@ -31,7 +33,11 @@ ui_score = 0.0
 
 balls = []
 monsters = []
+monsters_right = []
+monsters_left = []
 obstacles = []
+obstacles_right = []
+obstacles_left = []
 
 
 def collide(a, b):
@@ -71,12 +77,16 @@ def enter():
     hero = Obejct_Hero.Hero()
     game_world.add_object(hero, 1)
 
-    global monsters
-    monsters = [Monster() for i in range(50)]
+    global monsters, monsters_right, monsters_left
+    monsters_right = [Monster_right() for i in range(25)]
+    monsters_left = [Monster_left() for i in range(25)]
+    monsters = monsters_right + monsters_left
     game_world.add_objects(monsters, 1)
 
-    global obstacles
-    obstacles = [Obstacle() for i in range(50)]
+    global obstacles, obstacles_right, obstacles_left
+    obstacles_right = [Obstacle_right() for i in range(25)]
+    obstacles_left = [Obstacle_left() for i in range(25)]
+    obstacles = obstacles_right + obstacles_left
     game_world.add_objects(obstacles, 1)
 
     global itemes

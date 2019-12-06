@@ -7,15 +7,16 @@ TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 16
 
-class Monster:
+
+class Monster_right:
     image = None
 
     def __init__(self):
-        self.x, self. y = random.randint(1000, 10000), 55
+        self.x, self. y = random.randint(1000, 7000), 55
         self.random_x = random.randint(100, 700)
         self.frame = 0
-        if Monster.image is None:
-            Monster.image = load_image('Images/Monster.png')
+        if Monster_right.image is None:
+            Monster_right.image = load_image('Images/Monster_right.png')
 
     def get_bb(self):
         return self.x - 25, self.y - 25, self.x + 25, self.y + 25
@@ -23,13 +24,39 @@ class Monster:
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 16
         self.x -= self.random_x * game_framework.frame_time
-        if self.x < 0:
-            self. x = random.randint(1000, 10000)
+        if self.x < -100:
+            self. x = random.randint(1000, 7000)
 
     def draw(self):
-        self.image.clip_draw(int(self.frame) * 64, 0, 64, 64, self.x, self.y)
+        self.image.clip_draw(int(self.frame) * 64, 0, 64, 70, self.x, self.y)
         # draw_rectangle(*self.get_bb())
 
     def remove(self):
         game_world.remove_object(self)
 
+
+class Monster_left:
+    image = None
+
+    def __init__(self):
+        self.x, self. y = random.randint(-7000, -500), 55
+        self.random_x = random.randint(100, 700)
+        self.frame = 0
+        if Monster_left.image is None:
+            Monster_left.image = load_image('Images/Monster_left.png')
+
+    def get_bb(self):
+        return self.x - 25, self.y - 25, self.x + 25, self.y + 25
+
+    def update(self):
+        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 16
+        self.x += self.random_x * game_framework.frame_time
+        if self.x > 900:
+            self.x, self. y = random.randint(-7000, -500), 55
+
+    def draw(self):
+        self.image.clip_draw(int(self.frame) * 64, 0, 64, 70, self.x, self.y)
+        # draw_rectangle(*self.get_bb())
+
+    def remove(self):
+        game_world.remove_object(self)
