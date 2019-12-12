@@ -107,6 +107,7 @@ def get_score():
     return ui_score.score
 
 
+
 def exit():
     game_world.clear()
 
