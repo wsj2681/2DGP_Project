@@ -81,13 +81,15 @@ def enter():
     global monsters, monsters_right, monsters_left
     monsters_right = [Monster_right() for i in range(25)]
     monsters_left = [Monster_left() for i in range(25)]
-    monsters = monsters_right + monsters_left
+    monsters = monsters_right
+    monsters += monsters_left
     game_world.add_objects(monsters, 1)
 
     global obstacles, obstacles_right, obstacles_left
     obstacles_right = [Obstacle_right() for i in range(25)]
     obstacles_left = [Obstacle_left() for i in range(25)]
-    obstacles = obstacles_right + obstacles_left
+    obstacles = obstacles_right
+    obstacles += obstacles_left
     game_world.add_objects(obstacles, 1)
 
     global itemes
