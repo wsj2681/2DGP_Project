@@ -18,7 +18,7 @@ class Obstacle_right:
             Obstacle_right.image = load_image('Images/Obstacle_right.png')
 
     def get_bb(self):
-        return self.x - 20, self.y - 20, self.x + 20, self.y + 19
+        return self.x - 17, self.y - 20, self.x + 17, self.y + 19
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 10
@@ -42,7 +42,7 @@ class Obstacle_left:
             Obstacle_left.image = load_image('Images/Obstacle_left.png')
 
     def get_bb(self):
-        return self.x - 20, self.y - 20, self.x + 20, self.y + 19
+        return self.x - 17, self.y - 20, self.x + 17, self.y + 19
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 10

@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d5b885e0-3cee-4c85-967a-e9448c6871ae" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Object_Obstacle.py" beforeDir="false" afterPath="$PROJECT_DIR$/Object_Obstacle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ranking_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/ranking_data.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
